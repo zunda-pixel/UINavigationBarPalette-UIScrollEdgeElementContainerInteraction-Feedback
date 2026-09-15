@@ -1,0 +1,1 @@
+# UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-API
