@@ -113,6 +113,7 @@ Sources/
     Support/
       ListViewController.swift       # Shared list screen
       FilterSegmentedControl.swift   # Shared picker
+      BarContentView.swift           # Shared container, so both get identical margins
       Scenario.swift                 # Gives both implementations identical conditions
     Levels/
       Level1_ScrollEdgeEffect.swift … Level7_RealWorldUseCase.swift
@@ -124,7 +125,7 @@ options they enable.
 The difference in implementation size is itself evidence. The palette version is three lines:
 
 ```swift
-let palette = _UINavigationBarPalette(contentView: FilterSegmentedControl())!
+let palette = _UINavigationBarPalette(contentView: BarContentView())!
 palette.preferredHeight = scenario.barHeight
 navigationItem._bottomPalette = palette
 ```

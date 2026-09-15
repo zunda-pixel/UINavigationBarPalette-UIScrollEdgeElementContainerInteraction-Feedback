@@ -30,7 +30,7 @@ final class PaletteViewController: ListViewController {
     super.viewDidLoad()
 
     // 実装はこの 3 行だけ。画面構造の変更も、インセットの手計算も不要。
-    let palette = _UINavigationBarPalette(contentView: FilterSegmentedControl())!
+    let palette = _UINavigationBarPalette(contentView: BarContentView())!
     palette.preferredHeight = scenario.barHeight
     navigationItem._bottomPalette = palette
 

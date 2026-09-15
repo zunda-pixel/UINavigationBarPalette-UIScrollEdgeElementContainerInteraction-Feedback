@@ -21,7 +21,7 @@ final class PublicAPIViewController: UIViewController {
   private let scenario: Scenario
   private let listViewController: ListViewController
   private let barContainerView = UIView()
-  private let segmentedControl = FilterSegmentedControl()
+  private let barContentView = BarContentView()
 
   init(_ scenario: Scenario) {
     self.scenario = scenario
@@ -53,8 +53,8 @@ final class PublicAPIViewController: UIViewController {
     //    このビューコントローラのレイアウトパスであり、バー自身のレイアウトではない。
     //    バーの高さが動くケース（Level 3 のラージタイトル）でラグが出るのはこのため。
     barContainerView.translatesAutoresizingMaskIntoConstraints = false
-    segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-    barContainerView.addSubview(segmentedControl)
+    barContentView.translatesAutoresizingMaskIntoConstraints = false
+    barContainerView.addSubview(barContentView)
     view.addSubview(barContainerView)
 
     NSLayoutConstraint.activate([
@@ -63,9 +63,11 @@ final class PublicAPIViewController: UIViewController {
       barContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
       barContainerView.heightAnchor.constraint(equalToConstant: scenario.barHeight),
 
-      segmentedControl.leadingAnchor.constraint(equalTo: barContainerView.layoutMarginsGuide.leadingAnchor),
-      segmentedControl.trailingAnchor.constraint(equalTo: barContainerView.layoutMarginsGuide.trailingAnchor),
-      segmentedControl.centerYAnchor.constraint(equalTo: barContainerView.centerYAnchor),
+      // 余白を palette 版と揃えるため、ピッカーは共通の BarContentView に入れる。
+      barContentView.topAnchor.constraint(equalTo: barContainerView.topAnchor),
+      barContentView.leadingAnchor.constraint(equalTo: barContainerView.leadingAnchor),
+      barContentView.trailingAnchor.constraint(equalTo: barContainerView.trailingAnchor),
+      barContentView.bottomAnchor.constraint(equalTo: barContainerView.bottomAnchor),
     ])
 
     // 3. 公開 API が提供するのはここだけ。そしてこの役割については正しく機能する。

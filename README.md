@@ -113,6 +113,7 @@ Sources/
     Support/
       ListViewController.swift       # 両者が共有するリスト画面
       FilterSegmentedControl.swift   # 両者が共有するピッカー
+      BarContentView.swift           # 両者で余白を揃えるためのコンテナ
       Scenario.swift                 # 両者に同じ条件を与える設定
     Levels/
       Level1_ScrollEdgeEffect.swift … Level7_RealWorldUseCase.swift
@@ -124,7 +125,7 @@ Sources/
 実装量の差もそのまま資料になります。palette 版は 3 行です。
 
 ```swift
-let palette = _UINavigationBarPalette(contentView: FilterSegmentedControl())!
+let palette = _UINavigationBarPalette(contentView: BarContentView())!
 palette.preferredHeight = scenario.barHeight
 navigationItem._bottomPalette = palette
 ```
