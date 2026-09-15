@@ -20,7 +20,7 @@ The problem starts at Level 3.
 | Level | Goal | `UIScrollEdgeElementContainerInteraction` | `_UINavigationBarPalette` |
 |---|---|---|---|
 | 1 | Apply the scroll edge effect behind a custom bar | ✅ **Works** — this is what the API is for | — |
-| 2 | Make the custom bar occupy layout space | △ Possible by hand (requires restructuring the screen) | ✅ Automatic |
+| 2 | Make the custom bar occupy layout space | △ Position and size match by hand (requires restructuring the screen), but the material does not | ✅ Automatic |
 | 3 | Track the bar's bottom edge while a large title collapses | ✗ Lags and jitters | ✅ |
 | 4 | Compose with a stacked search bar | ✗ No placement, no visibility control | ✅ |
 | 5 | Stay in sync with the bar on push/pop | ✗ Two unrelated animations | ✅ |
@@ -38,6 +38,10 @@ because **there is no public way for a view outside the bar to follow that**.
 
 What FB22730304 asks for is therefore not a visual effect, but **a way to be a component that the
 navigation bar itself lays out**.
+
+The material diverges already at Level 2. Inside the palette the picker participates in the
+navigation bar's glass; in a container outside the bar it renders as an ordinary opaque control,
+with a hard edge-effect line appearing at the bottom of the bar.
 
 ## The two APIs
 
