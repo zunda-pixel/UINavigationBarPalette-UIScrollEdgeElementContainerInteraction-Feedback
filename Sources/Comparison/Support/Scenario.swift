@@ -23,13 +23,6 @@ struct Scenario: Sendable {
 
   /// 遷移を試すための Push ボタンを出すか。
   var showsPushButton: Bool = false
-
-  /// palette の `_contentViewMarginType`。
-  ///
-  /// palette は `contentView` を横いっぱいに広げますが、余白の付け方は
-  /// この非公開プロパティが持っています。`nil` のとき設定しません。
-  /// 取りうる値は `Exploration_ContentViewMarginType.swift` で確認します。
-  var contentViewMarginType: UInt64?
 }
 
 @available(iOS 18.0, *)

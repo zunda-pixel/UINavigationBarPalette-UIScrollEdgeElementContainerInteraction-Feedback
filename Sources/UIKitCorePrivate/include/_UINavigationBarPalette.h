@@ -17,14 +17,18 @@ UIKIT_EXTERN API_AVAILABLE(ios(13.4))
 @interface _UINavigationBarPalette : UIView <UIPointerInteractionDelegate, _UINavigationBarLayoutParticipating> {
 }
 
+// 注: ipsw が生成したプロパティ宣言には setter= が無いため、Swift から代入すると
+// set_contentViewMarginType: のような存在しないセレクタを呼んで実行時に落ちる。
+// 実際のセレクタ（下の instance methods を参照）に合わせて setter= を補っている。
+
 @property (copy, nonatomic) NSString *assistantIdentifier;
 @property (weak, nonatomic) _UIPointerInteractionAssistant *assistant;
 @property (nonatomic) _Bool transitioning;
 @property (nonatomic) _Bool pinned;
 @property (weak, nonatomic) UINavigationItem *owningNavigationItem;
-@property (nonatomic) unsigned long long _contentViewMarginType;
-@property (nonatomic) _Bool _displaysWhenSearchActive;
-@property (nonatomic) long long _layoutPriority;
+@property (nonatomic, setter=_setContentViewMarginType:) unsigned long long _contentViewMarginType;
+@property (nonatomic, setter=_setDisplaysWhenSearchActive:) _Bool _displaysWhenSearchActive;
+@property (nonatomic, setter=_setLayoutPriority:) long long _layoutPriority;
 @property (readonly, nonatomic) UIView *contentView;
 @property (nonatomic) double preferredHeight;
 @property (nonatomic) double minimumHeight;

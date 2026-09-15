@@ -31,16 +31,12 @@ final class PaletteViewController: ListViewController {
 
     // 実装はこの 3 行だけ。画面構造の変更も、インセットの手計算も不要。
     //
-    // contentView にはピッカーを直接渡す。間にコンテナビューを挟むと、
-    // ピッカーのガラス形状の角が崩れて描画される。
-    // 左右の余白は palette 自身が `_contentViewMarginType` として持っている。
-    let palette = _UINavigationBarPalette(contentView: FilterSegmentedControl())!
+    // palette は contentView を横いっぱいに広げるため、左右の余白は contentView 側で与える。
+    // `_contentViewMarginType` という非公開プロパティがあるが、値 0〜5 を試しても
+    // 観測可能な変化はなかった（詳細は README の「調査メモ」を参照）。
+    let palette = _UINavigationBarPalette(contentView: BarContentView())!
     palette.preferredHeight = scenario.barHeight
     navigationItem._bottomPalette = palette
-
-    if let contentViewMarginType = scenario.contentViewMarginType {
-      palette._contentViewMarginType = contentViewMarginType
-    }
 
     if scenario.usesSearchController {
       navigationItem.searchController = UISearchController(searchResultsController: nil)

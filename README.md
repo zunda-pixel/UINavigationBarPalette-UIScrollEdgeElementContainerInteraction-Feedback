@@ -160,6 +160,41 @@ var bottomPalette: UINavigationBarPalette?
   ありません。UIKit で構築されたアプリは、非公開 API に依存するか SwiftUI へ移行するかの
   選択を迫られています。
 
+## 調査メモ
+
+サンプルを組む過程で分かった、`_UINavigationBarPalette` を実際に使う際の落とし穴です。
+
+### ipsw が生成したプロパティ宣言はそのままでは実行時に落ちる
+
+`_UINavigationBarPalette.h` のプロパティ宣言には `setter=` が付いていません。
+
+```objc
+@property (nonatomic) unsigned long long _contentViewMarginType;
+```
+
+この宣言のまま Swift から代入すると `set_contentViewMarginType:` を呼びますが、
+実際のセレクタは同ヘッダの instance methods にある `_setContentViewMarginType:` です。
+
+```
+-[_UINavigationBarPalette set_contentViewMarginType:]: unrecognized selector sent to instance
+```
+
+`_displaysWhenSearchActive` と `_layoutPriority` も同じ形です。このリポジトリでは
+3 つとも `setter=` を補ってあります。`_displaysWhenSearchActive` は FB22730304 で公開を
+求めている項目でもあるため、この修正なしでは検証そのものができません。
+
+### `_contentViewMarginType` には観測可能な効果がなかった
+
+値 0〜5 を実機（iOS 27.0 シミュレータ）で試し、ピッカーの帯をピクセル単位で比較しましたが、
+すべて一致しました。名前に反して、これで左右の余白は付きません。
+
+### 余白は contentView 側で与える。ただし縦の内容サイズを確定させること
+
+palette は `contentView` を横いっぱいに広げるため、余白はコンテナビューで与えます
+（`BarContentView`）。このとき、コンテナ内でピッカーを centerY だけで留めると、
+ピッカーが palette の高さ（44pt）いっぱいに引き伸ばされ、カプセルの角が崩れて描画されます。
+上下も制約で留めて、コンテナ自身の縦の内容サイズを確定させる必要があります。
+
 ## 正確性に関する注記
 
 - `_UINavigationBarPalette.pinned` は、設定しても観測可能な変化がありませんでした。
