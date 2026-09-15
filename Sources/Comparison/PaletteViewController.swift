@@ -34,7 +34,7 @@ final class PaletteViewController: ListViewController {
     // palette は contentView を横いっぱいに広げるため、左右の余白は contentView 側で与える。
     // `_contentViewMarginType` という非公開プロパティがあるが、値 0〜5 を試しても
     // 観測可能な変化はなかった（詳細は README の「調査メモ」を参照）。
-    let palette = _UINavigationBarPalette(contentView: BarContentView())!
+    let palette = _UINavigationBarPalette(contentView: BarContentView(items: scenario.pickerItems))!
     palette.preferredHeight = scenario.barHeight
     navigationItem._bottomPalette = palette
 
@@ -66,9 +66,10 @@ final class PaletteViewController: ListViewController {
         title: "Push",
         primaryAction: UIAction { [weak self] _ in
           guard let self else { return }
-          var next = self.scenario
-          next.title = "Pushed"
-          self.navigationController?.pushViewController(PaletteViewController(next), animated: true)
+          self.navigationController?.pushViewController(
+            PaletteViewController(self.scenario.pushed()),
+            animated: true
+          )
         }
       )
     }
