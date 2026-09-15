@@ -10,7 +10,9 @@ struct Scenario: Sendable {
   var title: String = "Title"
 
   /// カスタムバー（ピッカーを載せる領域）の高さ。
-  var barHeight: CGFloat = 44
+  ///
+  /// 内訳は `BarMetrics` を参照。
+  var barHeight: CGFloat = BarMetrics.barHeight
 
   /// `prefersLargeTitles` を有効にするか。バーの高さがスクロールに応じて連続的に変化します。
   var prefersLargeTitle: Bool = false

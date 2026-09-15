@@ -1,22 +1,15 @@
 import UIKit
 
-/// ピッカーに左右マージンを与えるコンテナ。
+/// ピッカーに余白を与えるコンテナ。
 ///
-/// palette は `contentView` を横いっぱいに広げるため、マージンはこちら側で与える必要があります。
+/// palette は `contentView` をバーの幅いっぱいに広げるため、余白はこちら側で与える必要があります。
 /// palette 版と公開 API 版で余白を完全に揃えるため、両者ともこのビューを経由します。
-/// Level 2 の「見た目は一致する」という主張は、この共通化によって担保されています。
+///
+/// 上下も制約で留めているのは、このビュー自身の縦の内容サイズを確定させるためです。
+/// centerY だけで留めるとピッカーがコンテナの高さいっぱいまで引き伸ばされ、
+/// カプセルの角が崩れて描画されます。
 @available(iOS 13.0, *)
 final class BarContentView: UIView {
-  /// ピッカーの左右マージン。`insetGrouped` リストのカードと揃えています。
-  static let horizontalMargin: CGFloat = 20
-
-  /// ピッカーの上下マージン。
-  ///
-  /// 0 なので、ピッカーは `Scenario.barHeight`（44pt）いっぱいの高さになります。
-  /// 上下も制約で留めているのは、このビュー自身の縦の内容サイズを確定させるためです。
-  /// centerY だけで留めると内容サイズが定まらず、ピッカーの高さが安定しません。
-  static let verticalMargin: CGFloat = 0
-
   let segmentedControl = FilterSegmentedControl()
 
   init() {
@@ -28,19 +21,22 @@ final class BarContentView: UIView {
     NSLayoutConstraint.activate([
       segmentedControl.leadingAnchor.constraint(
         equalTo: leadingAnchor,
-        constant: Self.horizontalMargin
+        constant: BarMetrics.horizontalMargin
       ),
       segmentedControl.trailingAnchor.constraint(
         equalTo: trailingAnchor,
-        constant: -Self.horizontalMargin
+        constant: -BarMetrics.horizontalMargin
       ),
       segmentedControl.topAnchor.constraint(
         equalTo: topAnchor,
-        constant: Self.verticalMargin
+        constant: BarMetrics.topMargin
+      ),
+      segmentedControl.heightAnchor.constraint(
+        equalToConstant: BarMetrics.controlHeight
       ),
       segmentedControl.bottomAnchor.constraint(
         equalTo: bottomAnchor,
-        constant: -Self.verticalMargin
+        constant: -BarMetrics.bottomMargin
       ),
     ])
   }
