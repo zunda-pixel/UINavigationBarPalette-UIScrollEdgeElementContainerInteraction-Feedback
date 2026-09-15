@@ -13,11 +13,15 @@ enum BarMetrics {
   /// ピッカーの下マージン。そのままピッカーとコンテンツの間の隙間になります。
   static let bottomMargin: CGFloat = 12
 
-  /// `UISegmentedControl` の標準高さ。
+  /// ピッカーの高さ。
   ///
-  /// これを与えずにコンテナの高さいっぱいまで引き伸ばすと、
-  /// カプセルの角が崩れて描画されます。
-  static let controlHeight: CGFloat = 32
+  /// `UISegmentedControl` の標準高さは 32pt ですが、ここでは意図的に 44pt にしています。
+  /// この高さでは palette 版と公開 API 版で選択中セグメントの形が変わり、
+  /// contentView が palette 側のスタイルで描画されていることが目に見える形になります
+  /// （Level 2 を参照）。
+  ///
+  /// 高さを与えずにコンテナいっぱいまで引き伸ばすと、高さが安定せず描画も崩れます。
+  static let controlHeight: CGFloat = 44
 
   /// カスタムバー全体の高さ。
   static let barHeight: CGFloat = controlHeight + topMargin + bottomMargin
