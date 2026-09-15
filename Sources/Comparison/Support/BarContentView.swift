@@ -12,11 +12,10 @@ final class BarContentView: UIView {
 
   /// ピッカーの上下マージン。
   ///
-  /// 上下を制約で留めることで、このビュー自身の縦の内容サイズが確定します。
-  /// centerY だけで留めると内容サイズが 0 になり、palette がこのビューを
-  /// `systemLayoutSizeFitting` で測ったときに高さが定まらず、
-  /// ピッカーのガラス形状の角が崩れて描画されます。
-  static let verticalMargin: CGFloat = 6
+  /// 0 なので、ピッカーは `Scenario.barHeight`（44pt）いっぱいの高さになります。
+  /// 上下も制約で留めているのは、このビュー自身の縦の内容サイズを確定させるためです。
+  /// centerY だけで留めると内容サイズが定まらず、ピッカーの高さが安定しません。
+  static let verticalMargin: CGFloat = 0
 
   let segmentedControl = FilterSegmentedControl()
 
