@@ -5,8 +5,8 @@ import UIKit
 /// Music / Photos / Mail / Fitness が検索フィールドの直下に出すフィルタと同じ役割のコントロールです。
 @available(iOS 13.0, *)
 final class FilterSegmentedControl: UISegmentedControl {
-  init() {
-    super.init(items: ["All", "Favorites", "Recent"])
+  init(items: [String] = ["All", "Favorites", "Recent"]) {
+    super.init(items: items)
     selectedSegmentIndex = 0
   }
 

@@ -20,6 +20,12 @@ struct Scenario: Sendable {
   /// `preferredSearchBarPlacement = .stacked` の検索バーを追加するか。
   var usesSearchController: Bool = false
 
+  /// 検索バーの上側のスロット（`_topPalette`）にもピッカーを置くか。
+  ///
+  /// この項目は palette 版にしか効きません。公開 API にはタイトル領域と stacked 検索バーの
+  /// 「間」にビューを置く手段がないためです。効かないこと自体が Level 4 の論点です。
+  var usesTopPalette: Bool = false
+
   /// iOS 27 の `UINavigationItem.navigationBarMinimization` を有効にするか。
   var minimizesBarOnScrollDown: Bool = false
 

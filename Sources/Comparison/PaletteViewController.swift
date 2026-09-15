@@ -43,6 +43,15 @@ final class PaletteViewController: ListViewController {
       navigationItem.preferredSearchBarPlacement = .stacked
     }
 
+    // palette は検索バーに対して上下 2 つのスロットを持つ。公開 API 側にはどちらの相当物もない。
+    if scenario.usesTopPalette {
+      let topPalette = _UINavigationBarPalette(
+        contentView: BarContentView(items: ["Newest", "Oldest"])
+      )!
+      topPalette.preferredHeight = scenario.barHeight
+      navigationItem._topPalette = topPalette
+    }
+
     if scenario.prefersLargeTitle {
       navigationItem.largeTitleDisplayMode = .always
     }

@@ -10,9 +10,10 @@ import UIKit
 /// カプセルの角が崩れて描画されます。
 @available(iOS 13.0, *)
 final class BarContentView: UIView {
-  let segmentedControl = FilterSegmentedControl()
+  let segmentedControl: FilterSegmentedControl
 
-  init() {
+  init(items: [String] = ["All", "Favorites", "Recent"]) {
+    self.segmentedControl = FilterSegmentedControl(items: items)
     super.init(frame: .zero)
 
     segmentedControl.translatesAutoresizingMaskIntoConstraints = false

@@ -22,7 +22,7 @@ The problem starts at Level 3.
 | 1 | Apply the scroll edge effect behind a custom bar | ✅ **Works** — this is what the API is for | — |
 | 2 | Make the custom bar occupy layout space | △ Position and size match by hand (requires restructuring the screen), but the material does not | ✅ Automatic |
 | 3 | Track the bar's bottom edge while a large title collapses | ✗ Lags and jitters | ✅ |
-| 4 | Compose with a stacked search bar | ✗ No placement, no visibility control | ✅ |
+| 4 | Compose with a stacked search bar | ✗ Only one possible position, and no visibility control | ✅ Two slots: above the title and below the search bar |
 | 5 | Stay in sync with the bar on push/pop | ✗ Two unrelated animations | ✅ |
 | 6 | Participate in iOS 27 bar minimization | ✗ Cannot participate | ✅ |
 | 7 | **The real use case** (Levels 3 + 4 + 5) | ✗ | ✅ |
@@ -186,6 +186,22 @@ Assigning to it from Swift calls `set_contentViewMarginType:`, but the real sele
 `_displaysWhenSearchActive` and `_layoutPriority` have the same shape. All three are given an
 explicit `setter=` in this repository. `_displaysWhenSearchActive` is one of the properties
 FB22730304 asks to be made public, so without this fix it cannot even be evaluated.
+
+### `_topPalette` is the slot above the title
+
+The name suggests a slot above the search bar, but it is the top of the navigation bar itself.
+Setting both palettes alongside a stacked search bar produces this order, top to bottom (verified
+on an iOS 27.0 simulator):
+
+```
+_topPalette      <- above the title
+title
+search bar (stacked)
+_bottomPalette   <- below the search bar
+```
+
+A container view on the public API side can only sit at the bottom of the safe area, outside the
+navigation bar entirely, so neither position is reachable.
 
 ### `_contentViewMarginType` had no observable effect
 
