@@ -1,1 +1,176 @@
-# UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-API
+# `_UINavigationBarPalette` と `UIScrollEdgeElementContainerInteraction` の比較
+
+*English: [README.en.md](README.en.md)*
+
+相互運用性リクエスト **FB22730304**（`_UINavigationBarPalette` の公開要求）および関連する
+Code-Level Support ケースの補足資料です。
+
+FB22730304 に対して「`UIScrollEdgeElementContainerInteraction` で実現できる」とのご案内を
+いただきました。これを踏まえ、**同一の UI を 2 つの API で実装し、どこまでが公開 API で
+実現でき、どこから実現できなくなるのかをレベル別に切り分けた**のがこのリポジトリです。
+
+## 結論
+
+**Level 1 については、ご案内は正しいです。** `UIScrollEdgeElementContainerInteraction` は
+スクロールエッジエフェクトについては完全に機能し、この用途では palette を使う理由がありません。
+Level 2 も、代償を払えば公開 API で実用に耐えます。
+
+問題は Level 3 以降です。
+
+| Level | やりたいこと | `UIScrollEdgeElementContainerInteraction` | `_UINavigationBarPalette` |
+|---|---|---|---|
+| 1 | スクロールエッジエフェクトをカスタムバーの背後にかける | ✅ **実現できる**（この用途のための API） | — |
+| 2 | カスタムバーがレイアウト領域を占有する | △ 手作業で可能（画面構造の変更が必要） | ✅ 自動 |
+| 3 | ラージタイトル折りたたみ中にバー下端へ追従する | ✗ ラグ・ジッターが発生 | ✅ |
+| 4 | stacked 検索バーと合成する | ✗ 配置手段も表示制御もない | ✅ |
+| 5 | push / pop でバーと同期する | ✗ 無関係な 2 つのアニメーションになる | ✅ |
+| 6 | iOS 27 のバー最小化に追従する | ✗ 参加できない | ✅ |
+| 7 | **実際のユースケース**（Level 3 + 4 + 5） | ✗ | ✅ |
+
+### 境界線は「ナビゲーションバー自身の高さが変化するか」
+
+Level 1〜2 と Level 3 以降を分けているのは、この一点です。
+
+バーの高さが固定されている限り、カスタムバーを safeArea の上端に固定し、インセットを定数で
+押し下げれば成立します。しかしバーの高さが動き出した瞬間（ラージタイトルの折りたたみ、
+検索バーの起動・解除、iOS 27 のバー最小化）、**バー外のビューがそれに追従する公開手段がない**
+ため破綻します。
+
+したがって FB22730304 が求めているのは視覚効果ではなく、
+**ナビゲーションバー自身がレイアウトするコンポーネントになる手段**です。
+
+## 2 つの API
+
+### `UIScrollEdgeElementContainerInteraction`（iOS 26.0）
+
+iOS 27.0 SDK のヘッダにおける公開 API の全体:
+
+```objc
+UIKIT_FINAL UIKIT_EXTERN NS_SWIFT_UI_ACTOR API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0))
+@interface UIScrollEdgeElementContainerInteraction : NSObject <UIInteraction>
+/// The scroll view to affect
+@property (nonatomic, nullable, weak) UIScrollView *scrollView;
+/// The edge of the scroll view to affect
+@property (nonatomic) UIRectEdge edge;
+@end
+```
+
+ヘッダ自身が用途をこう説明しています。
+
+> Add this interaction to a container view of views that overlay the edge of a scroll view.
+> Any descendants of this view that should **affect the shape of the edge effect**, such as labels,
+> images, glass views, and controls, will automatically do so.
+
+スクロールエッジエフェクトの形状にビューを参加させるための仕組みです。
+
+### `_UINavigationBarPalette`
+
+`_UINavigationBarLayoutParticipating`（`-updateLayoutData:layoutWidth:`）に準拠する `UIView` で、
+`UINavigationItem` が `_topPalette` / `_bottomPalette` として所有し、`UINavigationBar` が
+自身の一部としてレイアウトします。ナビゲーションバーの構成要素です。
+
+両者はレイヤーが異なります。前者が後者の代わりにならないのはこのためです。
+
+## 動かし方
+
+Xcode 27 以降で `Package.swift` を開き、`Sources/Comparison/Levels/` の各ファイルで
+Xcode Previews を実行してください。プレビュー名は判定つきです。
+
+| プレビュー | 内容 |
+|---|---|
+| `Lv1 Public ✅` | 公開 API で実現できることの確認（palette 版は不要） |
+| `Lv2 Public △` / `Lv2 Palette` | 手作業で実現できるが代償がある |
+| `Lv3 Public ✗` / `Lv3 Palette` | ラージタイトル |
+| `Lv4 Public ✗` / `Lv4 Palette` | 検索バー |
+| `Lv5 Public ✗` / `Lv5 Palette` | push / pop |
+| `Lv6 Public ✗` / `Lv6 Palette` | iOS 27 バー最小化 |
+| `Lv7 Public ✗` / `Lv7 Palette` | **実際のユースケース。ここだけ見れば全体が分かる** |
+
+各レベルの「やりたいこと・結果・判定・確認手順」は、対応するソースファイルの先頭コメントに
+記載しています。
+
+### まず見るべきもの
+
+**`Lv7 Public ✗` と `Lv7 Palette`** を並べて、この順に操作してください。
+
+1. 静止状態で、ピッカーが検索フィールドに対してどこに座っているかを比較する
+2. ゆっくりスクロールしてラージタイトルを折りたたむ（Level 3 のラグ）
+3. 上端までフリックしてバウンスさせる（ラグが最大になる）
+4. 検索フィールドを起動し、解除する（Level 4 のインセット破綻）
+5. Push して、戻るジェスチャをゆっくりドラッグする（Level 5 の遷移ずれ）
+
+ラージタイトル ＋ stacked 検索バー ＋ その直下のピッカーという、Music / Photos / Mail /
+Fitness が採用しているパターンです。
+
+## 構成
+
+```
+Sources/
+  UIKitCorePrivate/            # 非公開ヘッダ（ipsw で iOS 26.5 から生成）
+  Comparison/
+    PaletteViewController.swift      # palette 版（参照実装）
+    PublicAPIViewController.swift    # 公開 API 版（最善の再現）
+    Support/
+      ListViewController.swift       # 両者が共有するリスト画面
+      FilterSegmentedControl.swift   # 両者が共有するピッカー
+      Scenario.swift                 # 両者に同じ条件を与える設定
+    Levels/
+      Level1_ScrollEdgeEffect.swift … Level7_RealWorldUseCase.swift
+```
+
+両実装は同一の `Scenario` を受け取ります。各 Level のプレビューは、どの項目を有効にしたかだけが
+違います。
+
+実装量の差もそのまま資料になります。palette 版は 3 行です。
+
+```swift
+let palette = _UINavigationBarPalette(contentView: FilterSegmentedControl())!
+palette.preferredHeight = scenario.barHeight
+navigationItem._bottomPalette = palette
+```
+
+公開 API 版は、リストの子ビューコントローラ化・制約・インタラクション・手動インセットの
+4 段階が必要で、そのうち公開 API が担うのは 1 段階だけです
+（`PublicAPIViewController.swift` のコメント 1〜4）。
+
+## 求めているもの
+
+既存の挙動へのアクセスのみで、新しい挙動は求めていません。最小限の公開範囲は次のとおりです。
+
+```swift
+// UINavigationBarPalette
+init(contentView: UIView)
+var preferredHeight: CGFloat
+var minimumHeight: CGFloat
+var displaysWhenSearchActive: Bool
+
+// UINavigationItem
+var topPalette: UINavigationBarPalette?
+var bottomPalette: UINavigationBarPalette?
+```
+
+## 参考
+
+- Apple Developer Forums [#808436](https://developer.apple.com/forums/thread/808436) —
+  「SwiftUI の `.safeAreaBar(edge: .top)` を UIKit で実現したい」という本件と同一の質問に対し、
+  同じく `UIScrollEdgeElementContainerInteraction` が案内されています。同スレッドには
+  「ナビゲーションバー表示時はエッジエフェクトが全幅に広がらない」という報告も付いています。
+- SwiftUI には `.safeAreaBar(edge:)` という公開 API が存在する一方、UIKit には等価な公開 API が
+  ありません。UIKit で構築されたアプリは、非公開 API に依存するか SwiftUI へ移行するかの
+  選択を迫られています。
+
+## 正確性に関する注記
+
+- `_UINavigationBarPalette.pinned` は、設定しても観測可能な変化がありませんでした。
+  FB22730304 で求めている範囲には含めていません。
+- `UINavigationController.attachPalette(_:isPinned:)` は、`navigationItem._bottomPalette` への
+  代入と同じ挙動でした。
+- Level 3・5・6 の差分は挙動であり、画面収録で確認するものです。それ以外の差分は
+  SDK のヘッダだけから確認できます。
+- `Sources/UIKitCorePrivate/include/` のヘッダは [ipsw](https://github.com/blacktop/ipsw) で
+  iOS 26.5 から生成したものです。比較をビルド可能にするためだけに同梱しています。
+
+## 確認環境
+
+- Xcode 27.0 (27A266a) / iOS 27.0 SDK
+- `xcodebuild -scheme Comparison -destination 'generic/platform=iOS Simulator'` でビルド成功
