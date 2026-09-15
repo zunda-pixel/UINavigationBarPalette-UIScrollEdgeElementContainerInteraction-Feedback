@@ -10,6 +10,14 @@ final class BarContentView: UIView {
   /// ピッカーの左右マージン。`insetGrouped` リストのカードと揃えています。
   static let horizontalMargin: CGFloat = 20
 
+  /// ピッカーの上下マージン。
+  ///
+  /// 上下を制約で留めることで、このビュー自身の縦の内容サイズが確定します。
+  /// centerY だけで留めると内容サイズが 0 になり、palette がこのビューを
+  /// `systemLayoutSizeFitting` で測ったときに高さが定まらず、
+  /// ピッカーのガラス形状の角が崩れて描画されます。
+  static let verticalMargin: CGFloat = 6
+
   let segmentedControl = FilterSegmentedControl()
 
   init() {
@@ -27,7 +35,14 @@ final class BarContentView: UIView {
         equalTo: trailingAnchor,
         constant: -Self.horizontalMargin
       ),
-      segmentedControl.centerYAnchor.constraint(equalTo: centerYAnchor),
+      segmentedControl.topAnchor.constraint(
+        equalTo: topAnchor,
+        constant: Self.verticalMargin
+      ),
+      segmentedControl.bottomAnchor.constraint(
+        equalTo: bottomAnchor,
+        constant: -Self.verticalMargin
+      ),
     ])
   }
 
