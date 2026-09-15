@@ -78,7 +78,7 @@ Xcode Previews を実行してください。プレビュー名は判定つき�
 
 | プレビュー | 内容 |
 |---|---|
-| `Lv1 Public ✅` | 公開 API で実現できることの確認（palette 版は不要） |
+| `Lv1 Public ✅` | 公開 API で実現できることの確認。スクロールするとエフェクトが見える（palette 版は不要） |
 | `Lv2 Public △` / `Lv2 Palette` | 手作業で実現できるが代償がある |
 | `Lv3 Public ✗` / `Lv3 Palette` | ラージタイトル |
 | `Lv4 Public ✗` / `Lv4 Palette` | 検索バー |

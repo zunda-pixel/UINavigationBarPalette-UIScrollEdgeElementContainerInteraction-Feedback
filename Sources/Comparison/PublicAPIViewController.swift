@@ -77,9 +77,7 @@ final class PublicAPIViewController: UIViewController {
     // 4. カスタムバーの高さはナビゲーションバーからは見えないので、インセットを手で押し下げる。
     //    この定数は、バー自身の高さが変わるたびに黙って陳腐化する。
     //    そして「バーの高さが変わった」ことを知る公開 API はない。
-    if scenario.occupiesLayoutSpace {
-      listViewController.additionalSafeAreaInsets.top = scenario.barHeight
-    }
+    listViewController.additionalSafeAreaInsets.top = scenario.barHeight
 
     if scenario.usesSearchController {
       navigationItem.searchController = UISearchController(searchResultsController: nil)

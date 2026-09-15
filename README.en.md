@@ -78,7 +78,7 @@ Open `Package.swift` in Xcode 27 or later and run the Xcode Previews in
 
 | Preview | Content |
 |---|---|
-| `Lv1 Public ✅` | What the public API does achieve (no palette version needed) |
+| `Lv1 Public ✅` | What the public API does achieve — scroll to see the effect (no palette version needed) |
 | `Lv2 Public △` / `Lv2 Palette` | Achievable by hand, at a cost |
 | `Lv3 Public ✗` / `Lv3 Palette` | Large title |
 | `Lv4 Public ✗` / `Lv4 Palette` | Search bar |
