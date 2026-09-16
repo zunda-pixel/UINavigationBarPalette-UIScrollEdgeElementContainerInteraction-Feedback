@@ -25,7 +25,7 @@ import UIKit
   makeNavigationController(
     rootViewController: PublicAPIViewController(
       Scenario(
-        title: "Level 7",
+        title: "Level 5",
         prefersLargeTitle: true,
         usesSearchController: true
       )
@@ -40,7 +40,7 @@ import UIKit
   makeNavigationController(
     rootViewController: PaletteViewController(
       Scenario(
-        title: "Level 7",
+        title: "Level 5",
         prefersLargeTitle: true,
         usesSearchController: true
       )

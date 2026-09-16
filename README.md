@@ -118,6 +118,7 @@ Sources/
       ListViewController.swift       # 両者が共有するリスト画面
       FilterSegmentedControl.swift   # 両者が共有するピッカー
       BarContentView.swift           # 両者で余白を揃えるためのコンテナ
+      BarMetrics.swift               # 両者が参照する唯一の寸法定義
       Scenario.swift                 # 両者に同じ条件を与える設定
     Levels/
       Level1_ScrollEdgeEffect.swift … Level5_RealWorldUseCase.swift
@@ -129,9 +130,9 @@ Sources/
 実装量の差もそのまま資料になります。palette 版は 3 行です。
 
 ```swift
-let palette = _UINavigationBarPalette(contentView: BarContentView())!
-palette.preferredHeight = scenario.barHeight
-navigationItem._bottomPalette = palette
+let bottomPalette = _UINavigationBarPalette(contentView: BarContentView())!
+bottomPalette.preferredHeight = scenario.barHeight
+navigationItem._bottomPalette = bottomPalette
 ```
 
 公開 API 版は、リストの子ビューコントローラ化・制約・インタラクション・手動インセットの
@@ -219,21 +220,22 @@ _bottomPalette   ← 検索バーより下
 値 0〜5 を実機（iOS 27.0 シミュレータ）で試し、ピッカーの帯をピクセル単位で比較しましたが、
 すべて一致しました。名前に反して、これで左右の余白は付きません。
 
-### 余白は contentView 側で与える。ただし縦の内容サイズを確定させること
+### 余白は contentView 側で与える。ただしピッカーの高さは明示すること
 
 palette は `contentView` を横いっぱいに広げるため、余白はコンテナビューで与えます
 （`BarContentView`）。このとき、コンテナ内でピッカーを centerY だけで留めると、
-ピッカーが palette の高さ（44pt）いっぱいに引き伸ばされ、カプセルの角が崩れて描画されます。
-上下も制約で留めて、コンテナ自身の縦の内容サイズを確定させる必要があります。
+ピッカーの高さが確定せずコンテナいっぱいまで引き伸ばされ、カプセルの縦横比が崩れます。
+上下を制約で留め、高さも明示する必要があります（`BarMetrics` にまとめてあります）。
 
 ## 正確性に関する注記
 
 - `_UINavigationBarPalette.pinned` は、設定しても観測可能な変化がありませんでした。
   FB22730304 で求めている範囲には含めていません。
-- `UINavigationController.attachPalette(_:isPinned:)` は、`navigationItem._bottomPalette` への
-  代入と同じ挙動でした。
-- Level 3・5・6 の差分は挙動であり、画面収録で確認するものです。それ以外の差分は
-  SDK のヘッダだけから確認できます。
+- `UINavigationController.attachPalette(_:isPinned:)` も試しましたが、
+  `navigationItem._bottomPalette` への代入と同じ挙動でした。同等のため、
+  このリポジトリには含めていません。
+- Level 2 のマテリアル差と Level 3 の差分は挙動であり、画面収録で確認するものです。
+  それ以外の差分は SDK のヘッダだけから確認できます。
 - `Sources/UIKitCorePrivate/include/` のヘッダは [ipsw](https://github.com/blacktop/ipsw) で
   iOS 26.5 から生成したものです。比較をビルド可能にするためだけに同梱しています。
 

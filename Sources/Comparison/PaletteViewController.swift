@@ -7,11 +7,9 @@ import UIKitCorePrivate
 /// （`-updateLayoutData:layoutWidth:`）として `UINavigationBar` が自身の一部としてレイアウトします。
 /// そのため以下はすべてバー側が面倒を見ており、このクラスには一切の帳尻合わせがありません。
 ///
-/// - セーフエリアへの算入（バーの高さに含まれる）
-/// - ラージタイトル折りたたみ中の追従
-/// - stacked 検索バーとの上下関係
-/// - push / pop 時のクロスフェード
-/// - iOS 27 のバー最小化への追従
+/// - セーフエリアへの算入（バーの高さに含まれる、Level 2）
+/// - ラージタイトル折りたたみ中の追従（Level 3）
+/// - stacked 検索バーとの上下関係（Level 4）
 @available(iOS 18.0, *)
 final class PaletteViewController: ListViewController {
   private let scenario: Scenario

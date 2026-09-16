@@ -118,6 +118,7 @@ Sources/
       ListViewController.swift       # Shared list screen
       FilterSegmentedControl.swift   # Shared picker
       BarContentView.swift           # Shared container, so both get identical margins
+      BarMetrics.swift               # The single source of the bar's dimensions
       Scenario.swift                 # Gives both implementations identical conditions
     Levels/
       Level1_ScrollEdgeEffect.swift … Level5_RealWorldUseCase.swift
@@ -129,9 +130,9 @@ options they enable.
 The difference in implementation size is itself evidence. The palette version is three lines:
 
 ```swift
-let palette = _UINavigationBarPalette(contentView: BarContentView())!
-palette.preferredHeight = scenario.barHeight
-navigationItem._bottomPalette = palette
+let bottomPalette = _UINavigationBarPalette(contentView: BarContentView())!
+bottomPalette.preferredHeight = scenario.barHeight
+navigationItem._bottomPalette = bottomPalette
 ```
 
 The public API version needs four steps — re-hosting the list as a child view controller,
@@ -218,20 +219,21 @@ navigation bar entirely, so neither position is reachable.
 Values 0-5 were tried on an iOS 27.0 simulator and the picker's band compared pixel by pixel.
 All identical. Despite the name, it does not produce horizontal margins.
 
-### Margins come from the contentView, which needs a determinate vertical content size
+### Margins come from the contentView, and the picker needs an explicit height
 
 The palette stretches `contentView` to the full bar width, so margins are supplied by a container
-view (`BarContentView`). Pinning the picker inside that container with `centerY` alone stretches
-it to the palette's full 44pt height and the capsule's corners render wrong. Pin top and bottom
-as well, so the container has a determinate vertical content size.
+view (`BarContentView`). Pinning the picker inside that container with `centerY` alone leaves its
+height undetermined, so it stretches to fill the container and the capsule's proportions break.
+Pin top and bottom and set the height explicitly (all of it lives in `BarMetrics`).
 
 ## Notes on accuracy
 
 - Setting `_UINavigationBarPalette.pinned` produced no observable change in our testing. It is not
   part of what FB22730304 asks for.
-- `UINavigationController.attachPalette(_:isPinned:)` behaved identically to assigning
-  `navigationItem._bottomPalette`.
-- The difference at Level 3 is behavioral and is confirmed by screen recording.
+- `UINavigationController.attachPalette(_:isPinned:)` was tried too and behaved identically to
+  assigning `navigationItem._bottomPalette`, so it is not included here.
+- Level 2's material difference and Level 3's lag are behavioral and are confirmed by screen
+  recording.
   Every other difference follows from the SDK headers alone.
 - The headers in `Sources/UIKitCorePrivate/include/` were generated from iOS 26.5 with
   [ipsw](https://github.com/blacktop/ipsw), and are bundled only so that the comparison builds.
