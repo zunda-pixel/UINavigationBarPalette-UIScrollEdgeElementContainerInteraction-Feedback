@@ -128,11 +128,15 @@ Full-resolution video: [lv1-public.mp4](Docs/lv1-public.mp4)
 
 Full-resolution video: [lv2-public.mp4](Docs/lv2-public.mp4) / [lv2-palette.mp4](Docs/lv2-palette.mp4)
 
-#### Level 3 — The large title's movement, and the switch to the inline title
+#### Level 3 — One continuous drag: up until the title goes inline, then back down without lifting
 
 | Public API | Palette |
 |---|---|
 | ![Public API](Docs/lv3-public.gif) | ![Palette](Docs/lv3-palette.gif) |
+
+Watch the moment the drag reverses past the top. In the public API version the large title is
+covered by the picker and fades out; in the palette version it stays clear. The custom bar sits
+outside the navigation bar, so it stays on top of the title as the bar grows.
 
 Full-resolution video: [lv3-public.mp4](Docs/lv3-public.mp4) / [lv3-palette.mp4](Docs/lv3-palette.mp4)
 
@@ -153,14 +157,8 @@ Full-resolution video: [lv4-public.mp4](Docs/lv4-public.mp4) / [lv4-palette.mp4]
 Full-resolution video: [lv5-public.mp4](Docs/lv5-public.mp4) / [lv5-palette.mp4](Docs/lv5-palette.mp4)
 
 **Note:** the scrolling and search activation in these recordings are driven
-programmatically, not by touch, so behavior that depends on touch-driven timing does not
-reproduce.
-
-One case was measured: setting a negative `contentOffset` programmatically to stretch past the
-top puts the large title underneath the picker — and it does so identically in both
-implementations, which points at a different layout path from a real drag rather than a real
-difference. Level 3's recording therefore stops short of the stretch. To compare that state,
-scroll by hand in the previews.
+programmatically, not by touch, so behavior that depends on touch-driven timing may not
+reproduce (iOS 27 bar minimization never fired under programmatic scrolling).
 
 ## Layout
 
