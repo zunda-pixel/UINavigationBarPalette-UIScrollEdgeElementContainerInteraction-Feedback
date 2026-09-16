@@ -15,7 +15,7 @@ achieve what the request asks for. This repository implements the same UI with b
 scroll edge effect completely, and there is no reason to reach for the palette at that level.
 Level 2 is also workable with public API, at a cost.
 
-The problem starts at Level 3.
+The problem is Levels 3, 4 and 6. Level 5 was tested and no difference was found.
 
 | Level | Goal | `UIScrollEdgeElementContainerInteraction` | `_UINavigationBarPalette` |
 |---|---|---|---|
@@ -23,18 +23,23 @@ The problem starts at Level 3.
 | 2 | Make the custom bar occupy layout space | △ Position and size match by hand (requires restructuring the screen), but the material does not | ✅ Automatic |
 | 3 | Track the bar's bottom edge while a large title collapses | ✗ Lags and jitters | ✅ |
 | 4 | Compose with a stacked search bar | ✗ Only one possible position, and no visibility control | ✅ Two slots: above the title and below the search bar |
-| 5 | Be treated as bar content across push/pop | △ A subview of the view controller's view, so it travels with it (the visible difference still needs manual confirmation) | ✅ Owned by `UINavigationItem` |
+| 5 | Survive push/pop transitions | ✅ **No difference found** | ✅ |
 | 6 | Participate in iOS 27 bar minimization | ✗ Cannot participate | ✅ |
-| 7 | **The real use case** (Levels 3 + 4 + 5) | ✗ | ✅ |
+| 7 | **The real use case** (Levels 3 + 4) | ✗ | ✅ |
 
 ### The dividing line is whether the navigation bar's own height changes
 
-That single question separates Levels 1–2 from Level 3 onward.
+That single question separates the levels with a gap from the ones without.
 
 As long as the bar's height is fixed, pinning a custom bar to the top of the safe area and pushing
-the content inset down by a constant works. The moment the bar's height starts moving — a large
-title collapsing, a search bar activating or dismissing, iOS 27 bar minimization — it breaks,
-because **there is no public way for a view outside the bar to follow that**.
+the content inset down by a constant works. The moment the bar's height starts moving it breaks,
+because **there is no public way for a view outside the bar to follow that**. Every level with a
+gap is a height-changing case: Level 3 (a large title collapsing), Level 4 (a search bar
+activating and dismissing), Level 6 (iOS 27 bar minimization).
+
+Level 5 (push/pop) is the converse: the bar's height does not change, and despite the difference in
+ownership — the palette belongs to `UINavigationItem`, the custom bar is a subview of the view
+controller's view — no difference showed up in practice. That supports the dividing line.
 
 What FB22730304 asks for is therefore not a visual effect, but **a way to be a component that the
 navigation bar itself lays out**.
