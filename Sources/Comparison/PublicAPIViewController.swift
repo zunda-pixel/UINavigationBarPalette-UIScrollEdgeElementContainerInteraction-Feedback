@@ -21,12 +21,11 @@ final class PublicAPIViewController: UIViewController {
   private let scenario: Scenario
   private let listViewController: ListViewController
   private let barContainerView = UIView()
-  private let barContentView: BarContentView
+  private let barContentView = BarContentView()
 
   init(_ scenario: Scenario) {
     self.scenario = scenario
     self.listViewController = ListViewController(title: scenario.title)
-    self.barContentView = BarContentView(items: scenario.pickerItems)
     super.init(nibName: nil, bundle: nil)
     title = scenario.title
   }
@@ -94,19 +93,6 @@ final class PublicAPIViewController: UIViewController {
     if scenario.minimizesBarOnScrollDown, #available(iOS 27.0, *) {
       navigationItem.navigationBarMinimization.minimizationBehavior = .onScrollDown
       navigationItem.navigationBarMinimization.safeAreaAdjustment = .enabled
-    }
-
-    if scenario.showsPushButton {
-      navigationItem.rightBarButtonItem = UIBarButtonItem(
-        title: "Push",
-        primaryAction: UIAction { [weak self] _ in
-          guard let self else { return }
-          self.navigationController?.pushViewController(
-            PublicAPIViewController(self.scenario.pushed()),
-            animated: true
-          )
-        }
-      )
     }
   }
 }

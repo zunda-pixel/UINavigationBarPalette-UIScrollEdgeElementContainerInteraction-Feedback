@@ -1,7 +1,7 @@
 import SwiftUI
 import UIKit
 
-// MARK: - Level 6 — iOS 27 のバー最小化　✗ 実現できない
+// MARK: - Level 5 — iOS 27 のバー最小化　✗ 実現できない
 //
 // やりたいこと:
 //   iOS 27 で追加された `UINavigationItem.navigationBarMinimization` を有効にしたとき、
@@ -22,9 +22,9 @@ import UIKit
 //
 // 確認手順: バーが最小化されるまでスクロールダウンする。
 
-/// Level 6 公開 API 版: バーだけが最小化し、ピッカーは取り残される。
+/// Level 5 公開 API 版: バーだけが最小化し、ピッカーは取り残される。
 @available(iOS 27.0, *)
-#Preview("Lv6 Public ✗") {
+#Preview("Lv5 Public ✗") {
   makeNavigationController(
     rootViewController: PublicAPIViewController(
       Scenario(title: "Level 6", minimizesBarOnScrollDown: true)
@@ -32,9 +32,9 @@ import UIKit
   )
 }
 
-/// Level 6 palette 版: バーと一緒に最小化する。
+/// Level 5 palette 版: バーと一緒に最小化する。
 @available(iOS 27.0, *)
-#Preview("Lv6 Palette") {
+#Preview("Lv5 Palette") {
   makeNavigationController(
     rootViewController: PaletteViewController(
       Scenario(title: "Level 6", minimizesBarOnScrollDown: true)

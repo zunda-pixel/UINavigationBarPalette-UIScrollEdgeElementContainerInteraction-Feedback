@@ -15,7 +15,7 @@ achieve what the request asks for. This repository implements the same UI with b
 scroll edge effect completely, and there is no reason to reach for the palette at that level.
 Level 2 is also workable with public API, at a cost.
 
-The problem is Levels 3, 4 and 6. Level 5 was tested and no difference was found.
+The problem is Levels 3, 4 and 5.
 
 | Level | Goal | `UIScrollEdgeElementContainerInteraction` | `_UINavigationBarPalette` |
 |---|---|---|---|
@@ -23,9 +23,8 @@ The problem is Levels 3, 4 and 6. Level 5 was tested and no difference was found
 | 2 | Make the custom bar occupy layout space | △ Position and size match by hand (requires restructuring the screen), but the material does not | ✅ Automatic |
 | 3 | Track the bar's bottom edge while a large title collapses | ✗ Lags and jitters | ✅ |
 | 4 | Compose with a stacked search bar | ✗ Only one possible position, and no visibility control | ✅ Two slots: above the title and below the search bar |
-| 5 | Survive push/pop transitions | ✅ **No difference found** | ✅ |
-| 6 | Participate in iOS 27 bar minimization | ✗ Cannot participate | ✅ |
-| 7 | **The real use case** (Levels 3 + 4) | ✗ | ✅ |
+| 5 | Participate in iOS 27 bar minimization | ✗ Cannot participate | ✅ |
+| 6 | **The real use case** (Levels 3 + 4) | ✗ | ✅ |
 
 ### The dividing line is whether the navigation bar's own height changes
 
@@ -35,11 +34,11 @@ As long as the bar's height is fixed, pinning a custom bar to the top of the saf
 the content inset down by a constant works. The moment the bar's height starts moving it breaks,
 because **there is no public way for a view outside the bar to follow that**. Every level with a
 gap is a height-changing case: Level 3 (a large title collapsing), Level 4 (a search bar
-activating and dismissing), Level 6 (iOS 27 bar minimization).
+activating and dismissing), Level 5 (iOS 27 bar minimization).
 
-Level 5 (push/pop) is the converse: the bar's height does not change, and despite the difference in
-ownership — the palette belongs to `UINavigationItem`, the custom bar is a subview of the view
-controller's view — no difference showed up in practice. That supports the dividing line.
+Where the height does not change, no difference appears. Push/pop was tested too: despite the
+difference in ownership — the palette belongs to `UINavigationItem`, the custom bar is a subview of
+the view controller's view — nothing visible came of it, so it is not kept as a level.
 
 What FB22730304 asks for is therefore not a visual effect, but **a way to be a component that the
 navigation bar itself lays out**.
@@ -91,22 +90,20 @@ Open `Package.swift` in Xcode 27 or later and run the Xcode Previews in
 | `Lv2 Public △` / `Lv2 Palette` | Achievable by hand, at a cost |
 | `Lv3 Public ✗` / `Lv3 Palette` | Large title |
 | `Lv4 Public ✗` / `Lv4 Palette` | Search bar |
-| `Lv5 Public ✗` / `Lv5 Palette` | Push / pop |
-| `Lv6 Public ✗` / `Lv6 Palette` | iOS 27 bar minimization |
-| `Lv7 Public ✗` / `Lv7 Palette` | **The real use case. This pair alone shows the whole picture** |
+| `Lv5 Public ✗` / `Lv5 Palette` | iOS 27 bar minimization |
+| `Lv6 Public ✗` / `Lv6 Palette` | **The real use case. This pair alone shows the whole picture** |
 
 Each level's goal, result, verdict and reproduction steps are documented at the top of the
 corresponding source file (in Japanese).
 
 ### Start here
 
-Run **`Lv7 Public ✗`** and **`Lv7 Palette`** side by side and walk through them in this order:
+Run **`Lv6 Public ✗`** and **`Lv6 Palette`** side by side and walk through them in this order:
 
 1. At rest, compare where the picker sits relative to the search field.
 2. Scroll up slowly and let the large title collapse (Level 3 — the lag).
 3. Flick to the top and let it bounce (the lag is at its worst here).
 4. Activate the search field, then dismiss it (Level 4 — the inset breaks).
-5. Tap Push, then drag the interactive back gesture slowly (Level 5 — the transition desync).
 
 This is a large title, a stacked search bar, and a picker directly below it: the pattern used by
 Music, Photos, Mail and Fitness.
@@ -125,7 +122,7 @@ Sources/
       BarContentView.swift           # Shared container, so both get identical margins
       Scenario.swift                 # Gives both implementations identical conditions
     Levels/
-      Level1_ScrollEdgeEffect.swift … Level7_RealWorldUseCase.swift
+      Level1_ScrollEdgeEffect.swift … Level6_RealWorldUseCase.swift
 ```
 
 Both implementations take the same `Scenario`. The previews for each level differ only in which
@@ -226,7 +223,7 @@ as well, so the container has a determinate vertical content size.
   part of what FB22730304 asks for.
 - `UINavigationController.attachPalette(_:isPinned:)` behaved identically to assigning
   `navigationItem._bottomPalette`.
-- The differences at Levels 3, 5 and 6 are behavioral and are confirmed by screen recording.
+- The differences at Levels 3 and 5 are behavioral and are confirmed by screen recording.
   Every other difference follows from the SDK headers alone.
 - The headers in `Sources/UIKitCorePrivate/include/` were generated from iOS 26.5 with
   [ipsw](https://github.com/blacktop/ipsw), and are bundled only so that the comparison builds.

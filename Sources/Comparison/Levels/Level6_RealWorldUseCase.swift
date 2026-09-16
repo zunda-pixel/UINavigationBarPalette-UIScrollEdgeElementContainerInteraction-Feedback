@@ -1,7 +1,7 @@
 import SwiftUI
 import UIKit
 
-// MARK: - Level 7 — 実際のユースケース（FB22730304）　✗ 実現できない
+// MARK: - Level 6 — 実際のユースケース（FB22730304）　✗ 実現できない
 //
 // やりたいこと:
 //   ラージタイトル ＋ stacked 検索バー ＋ その直下のピッカー。
@@ -18,34 +18,31 @@ import UIKit
 //   2. ゆっくりスクロールしてラージタイトルを折りたたむ（Level 3 のラグ）。
 //   3. 上端までフリックしてバウンスさせる（ラグが最大になる）。
 //   4. 検索フィールドを起動し、解除する（Level 4 のインセット破綻）。
-//   5. Push して、戻るジェスチャをゆっくりドラッグする（Level 5。ここは差が出ない）。
 
-/// Level 7 公開 API 版。
+/// Level 6 公開 API 版。
 @available(iOS 26.0, *)
-#Preview("Lv7 Public ✗") {
+#Preview("Lv6 Public ✗") {
   makeNavigationController(
     rootViewController: PublicAPIViewController(
       Scenario(
         title: "Level 7",
         prefersLargeTitle: true,
-        usesSearchController: true,
-        showsPushButton: true
+        usesSearchController: true
       )
     ),
     prefersLargeTitles: true
   )
 }
 
-/// Level 7 palette 版。
+/// Level 6 palette 版。
 @available(iOS 18.0, *)
-#Preview("Lv7 Palette") {
+#Preview("Lv6 Palette") {
   makeNavigationController(
     rootViewController: PaletteViewController(
       Scenario(
         title: "Level 7",
         prefersLargeTitle: true,
-        usesSearchController: true,
-        showsPushButton: true
+        usesSearchController: true
       )
     ),
     prefersLargeTitles: true
