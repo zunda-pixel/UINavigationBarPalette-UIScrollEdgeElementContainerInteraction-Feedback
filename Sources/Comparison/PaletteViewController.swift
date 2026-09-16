@@ -55,10 +55,5 @@ final class PaletteViewController: ListViewController {
     if scenario.prefersLargeTitle {
       navigationItem.largeTitleDisplayMode = .always
     }
-
-    if scenario.minimizesBarOnScrollDown, #available(iOS 27.0, *) {
-      navigationItem.navigationBarMinimization.minimizationBehavior = .onScrollDown
-      navigationItem.navigationBarMinimization.safeAreaAdjustment = .enabled
-    }
   }
 }

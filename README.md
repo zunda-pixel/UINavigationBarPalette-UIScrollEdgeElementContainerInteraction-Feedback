@@ -15,7 +15,7 @@ FB22730304 に対して「`UIScrollEdgeElementContainerInteraction` で実現で
 スクロールエッジエフェクトについては完全に機能し、この用途では palette を使う理由がありません。
 Level 2 も、代償を払えば公開 API で実用に耐えます。
 
-問題は Level 3・4・5 です。
+問題は Level 3・4 です。
 
 | Level | やりたいこと | `UIScrollEdgeElementContainerInteraction` | `_UINavigationBarPalette` |
 |---|---|---|---|
@@ -23,8 +23,7 @@ Level 2 も、代償を払えば公開 API で実用に耐えます。
 | 2 | カスタムバーがレイアウト領域を占有する | △ 位置とサイズは手作業で揃う（画面構造の変更が必要）。ただしマテリアルは揃わない | ✅ 自動 |
 | 3 | ラージタイトル折りたたみ中にバー下端へ追従する | ✗ ラグ・ジッターが発生 | ✅ |
 | 4 | stacked 検索バーと合成する | ✗ 置ける位置が 1 箇所だけで、表示制御もない | ✅ タイトルの上と検索バーの下の 2 スロット |
-| 5 | iOS 27 のバー最小化に追従する | ✗ 参加できない | ✅ |
-| 6 | **実際のユースケース**（Level 3 + 4） | ✗ | ✅ |
+| 5 | **実際のユースケース**（Level 3 + 4） | ✗ | ✅ |
 
 ### 境界線は「ナビゲーションバー自身の高さが変化するか」
 
@@ -33,8 +32,7 @@ Level 2 も、代償を払えば公開 API で実用に耐えます。
 バーの高さが固定されている限り、カスタムバーを safeArea の上端に固定し、インセットを定数で
 押し下げれば成立します。しかしバーの高さが動き出した瞬間、**バー外のビューがそれに追従する
 公開手段がない**ため破綻します。ギャップのある Level 3（ラージタイトルの折りたたみ）、
-Level 4（検索バーの起動・解除）、Level 5（iOS 27 のバー最小化）は、いずれもバーの高さが
-変化するケースです。
+Level 4（検索バーの起動・解除）は、いずれもバーの高さが変化するケースです。
 
 逆にバーの高さが変わらない操作では差が出ません。push / pop も検証しましたが、所有関係は違う
 （palette は `UINavigationItem` が所有し、カスタムバーはビューコントローラの view の
@@ -91,15 +89,14 @@ Xcode Previews を実行してください。プレビュー名は判定つき�
 | `Lv2 Public △` / `Lv2 Palette` | 手作業で実現できるが代償がある |
 | `Lv3 Public ✗` / `Lv3 Palette` | ラージタイトル |
 | `Lv4 Public ✗` / `Lv4 Palette` | 検索バー |
-| `Lv5 Public ✗` / `Lv5 Palette` | iOS 27 バー最小化 |
-| `Lv6 Public ✗` / `Lv6 Palette` | **実際のユースケース。ここだけ見れば全体が分かる** |
+| `Lv5 Public ✗` / `Lv5 Palette` | **実際のユースケース。ここだけ見れば全体が分かる** |
 
 各レベルの「やりたいこと・結果・判定・確認手順」は、対応するソースファイルの先頭コメントに
 記載しています。
 
 ### まず見るべきもの
 
-**`Lv6 Public ✗` と `Lv6 Palette`** を並べて、この順に操作してください。
+**`Lv5 Public ✗` と `Lv5 Palette`** を並べて、この順に操作してください。
 
 1. 静止状態で、ピッカーが検索フィールドに対してどこに座っているかを比較する
 2. ゆっくりスクロールしてラージタイトルを折りたたむ（Level 3 のラグ）
@@ -123,7 +120,7 @@ Sources/
       BarContentView.swift           # 両者で余白を揃えるためのコンテナ
       Scenario.swift                 # 両者に同じ条件を与える設定
     Levels/
-      Level1_ScrollEdgeEffect.swift … Level6_RealWorldUseCase.swift
+      Level1_ScrollEdgeEffect.swift … Level5_RealWorldUseCase.swift
 ```
 
 両実装は同一の `Scenario` を受け取ります。各 Level のプレビューは、どの項目を有効にしたかだけが
@@ -189,6 +186,17 @@ var bottomPalette: UINavigationBarPalette?
 `_displaysWhenSearchActive` と `_layoutPriority` も同じ形です。このリポジトリでは
 3 つとも `setter=` を補ってあります。`_displaysWhenSearchActive` は FB22730304 で公開を
 求めている項目でもあるため、この修正なしでは検証そのものができません。
+
+### iOS 27 のバー最小化は検証できなかった
+
+`UINavigationItem.navigationBarMinimization` を設定して比較する Level を用意していましたが、
+このサンプルでは最小化そのものが発火しませんでした。プログラムから
+`setContentOffset(_:animated:)` でスクロールしてもナビゲーションバーの高さは変化せず
+（palette 版 118pt、公開 API 版 54pt のまま）、プレビューで手動スクロールしても
+両者に差は見られませんでした。
+
+ギャップの有無を判断できないため、この項目は Level から外してあります。
+FB22730304 はこれを根拠にしていません。
 
 ### `_topPalette` はタイトルより上のスロット
 

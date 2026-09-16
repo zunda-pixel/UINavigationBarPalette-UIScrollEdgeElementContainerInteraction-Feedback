@@ -1,7 +1,7 @@
 import SwiftUI
 import UIKit
 
-// MARK: - Level 6 — 実際のユースケース（FB22730304）　✗ 実現できない
+// MARK: - Level 5 — 実際のユースケース（FB22730304）　✗ 実現できない
 //
 // やりたいこと:
 //   ラージタイトル ＋ stacked 検索バー ＋ その直下のピッカー。
@@ -19,9 +19,9 @@ import UIKit
 //   3. 上端までフリックしてバウンスさせる（ラグが最大になる）。
 //   4. 検索フィールドを起動し、解除する（Level 4 のインセット破綻）。
 
-/// Level 6 公開 API 版。
+/// Level 5 公開 API 版。
 @available(iOS 26.0, *)
-#Preview("Lv6 Public ✗") {
+#Preview("Lv5 Public ✗") {
   makeNavigationController(
     rootViewController: PublicAPIViewController(
       Scenario(
@@ -34,9 +34,9 @@ import UIKit
   )
 }
 
-/// Level 6 palette 版。
+/// Level 5 palette 版。
 @available(iOS 18.0, *)
-#Preview("Lv6 Palette") {
+#Preview("Lv5 Palette") {
   makeNavigationController(
     rootViewController: PaletteViewController(
       Scenario(
