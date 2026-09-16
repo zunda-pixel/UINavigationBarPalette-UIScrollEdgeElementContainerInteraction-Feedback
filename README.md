@@ -151,6 +151,8 @@ Level 3 の GIF のみ 1.8 倍速です。原寸の mp4 は実速度です。
 |---|---|---|
 | ![公開 API 版](Docs/lv4-public.gif) | ![palette 版（下スロット）](Docs/lv4-palette.gif) | ![palette 版（上スロット）](Docs/lv4-palette-top.gif) |
 
+Level 4 の GIF は 0.5 倍速です。原寸の mp4 は実速度です。
+
 原寸の動画: [lv4-public.mp4](Docs/lv4-public.mp4) / [lv4-palette.mp4](Docs/lv4-palette.mp4) / [lv4-palette-top.mp4](Docs/lv4-palette-top.mp4)
 
 #### Level 5 — 折りたたみ → バウンス → 検索の起動と解除
