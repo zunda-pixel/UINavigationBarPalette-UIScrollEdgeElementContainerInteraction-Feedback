@@ -109,37 +109,48 @@ Music, Photos, Mail and Fitness.
 ### Recordings
 
 Recorded on an iOS 27.0 simulator (iPhone 18 Pro) running this repository's own code.
-The files live in `Docs/`.
+The tables show GIFs (280px, 10fps); the full-resolution mp4 is linked under each level.
+All files live in `Docs/`.
 
 #### Level 1 — Scrolling brings the edge effect up behind the picker
 
 | Public API |
 |---|
-| <video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv1-public.mp4" controls muted playsinline width="260"></video> |
+| ![Public API](Docs/lv1-public.gif) |
+
+Full-resolution video: [lv1-public.mp4](Docs/lv1-public.mp4)
 
 #### Level 2 — Same position and size; compare the picker's material and whether an edge line appears under the bar
 
 | Public API | Palette |
 |---|---|
-| <video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv2-public.mp4" controls muted playsinline width="260"></video> | <video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv2-palette.mp4" controls muted playsinline width="260"></video> |
+| ![Public API](Docs/lv2-public.gif) | ![Palette](Docs/lv2-palette.gif) |
+
+Full-resolution video: [lv2-public.mp4](Docs/lv2-public.mp4) / [lv2-palette.mp4](Docs/lv2-palette.mp4)
 
 #### Level 3 — The large title collapsing, then bouncing
 
 | Public API | Palette |
 |---|---|
-| <video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv3-public.mp4" controls muted playsinline width="260"></video> | <video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv3-palette.mp4" controls muted playsinline width="260"></video> |
+| ![Public API](Docs/lv3-public.gif) | ![Palette](Docs/lv3-palette.gif) |
+
+Full-resolution video: [lv3-public.mp4](Docs/lv3-public.mp4) / [lv3-palette.mp4](Docs/lv3-palette.mp4)
 
 #### Level 4 — Search activating and dismissing. The palette can sit below the search bar or above the title
 
 | Public API | Palette (bottom slot) | Palette (top slot) |
 |---|---|---|
-| <video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv4-public.mp4" controls muted playsinline width="260"></video> | <video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv4-palette.mp4" controls muted playsinline width="260"></video> | <video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv4-palette-top.mp4" controls muted playsinline width="260"></video> |
+| ![Public API](Docs/lv4-public.gif) | ![Palette (bottom slot)](Docs/lv4-palette.gif) | ![Palette (top slot)](Docs/lv4-palette-top.gif) |
+
+Full-resolution video: [lv4-public.mp4](Docs/lv4-public.mp4) / [lv4-palette.mp4](Docs/lv4-palette.mp4) / [lv4-palette-top.mp4](Docs/lv4-palette-top.mp4)
 
 #### Level 5 — Collapse, bounce, then search activating and dismissing
 
 | Public API | Palette |
 |---|---|
-| <video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv5-public.mp4" controls muted playsinline width="260"></video> | <video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv5-palette.mp4" controls muted playsinline width="260"></video> |
+| ![Public API](Docs/lv5-public.gif) | ![Palette](Docs/lv5-palette.gif) |
+
+Full-resolution video: [lv5-public.mp4](Docs/lv5-public.mp4) / [lv5-palette.mp4](Docs/lv5-palette.mp4)
 
 **Note:** the scrolling and search activation in these recordings are driven
 programmatically, not by touch. Behavior that depends on touch-driven timing, such as the
@@ -148,7 +159,7 @@ lag at Level 3, may not reproduce here; check those by hand in the previews.
 ## Layout
 
 ```
-Docs/                          # One recording per level
+Docs/                          # One recording per level (GIF and mp4)
 Sources/
   UIKitCorePrivate/            # Private headers (generated from iOS 26.5 with ipsw)
   Comparison/

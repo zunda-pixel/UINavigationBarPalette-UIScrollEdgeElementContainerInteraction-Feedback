@@ -109,37 +109,48 @@ Fitness が採用しているパターンです。
 ### 録画
 
 iOS 27.0 シミュレータ（iPhone 18 Pro）で、このリポジトリのコードをそのまま動かして
-撮ったものです。ファイルは `Docs/` にあります。
+撮ったものです。表内は GIF（280px / 10fps）で、原寸の mp4 は各 Level の下にリンクしてあります。
+ファイルはすべて `Docs/` にあります。
 
 #### Level 1 — スクロールするとピッカーの背後にエッジエフェクトがかかる
 
 | 公開 API 版 |
 |---|
-| <video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv1-public.mp4" controls muted playsinline width="260"></video> |
+| ![公開 API 版](Docs/lv1-public.gif) |
+
+原寸の動画: [lv1-public.mp4](Docs/lv1-public.mp4)
 
 #### Level 2 — 位置とサイズは同一。ピッカーの質感と、バー下端に境目の線が出るかを比べる
 
 | 公開 API 版 | palette 版 |
 |---|---|
-| <video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv2-public.mp4" controls muted playsinline width="260"></video> | <video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv2-palette.mp4" controls muted playsinline width="260"></video> |
+| ![公開 API 版](Docs/lv2-public.gif) | ![palette 版](Docs/lv2-palette.gif) |
+
+原寸の動画: [lv2-public.mp4](Docs/lv2-public.mp4) / [lv2-palette.mp4](Docs/lv2-palette.mp4)
 
 #### Level 3 — ラージタイトルの折りたたみとバウンス
 
 | 公開 API 版 | palette 版 |
 |---|---|
-| <video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv3-public.mp4" controls muted playsinline width="260"></video> | <video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv3-palette.mp4" controls muted playsinline width="260"></video> |
+| ![公開 API 版](Docs/lv3-public.gif) | ![palette 版](Docs/lv3-palette.gif) |
+
+原寸の動画: [lv3-public.mp4](Docs/lv3-public.mp4) / [lv3-palette.mp4](Docs/lv3-palette.mp4)
 
 #### Level 4 — 検索の起動と解除。palette は検索バーの下とタイトルの上の 2 箇所に置ける
 
 | 公開 API 版 | palette 版（下スロット） | palette 版（上スロット） |
 |---|---|---|
-| <video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv4-public.mp4" controls muted playsinline width="260"></video> | <video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv4-palette.mp4" controls muted playsinline width="260"></video> | <video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv4-palette-top.mp4" controls muted playsinline width="260"></video> |
+| ![公開 API 版](Docs/lv4-public.gif) | ![palette 版（下スロット）](Docs/lv4-palette.gif) | ![palette 版（上スロット）](Docs/lv4-palette-top.gif) |
+
+原寸の動画: [lv4-public.mp4](Docs/lv4-public.mp4) / [lv4-palette.mp4](Docs/lv4-palette.mp4) / [lv4-palette-top.mp4](Docs/lv4-palette-top.mp4)
 
 #### Level 5 — 折りたたみ → バウンス → 検索の起動と解除
 
 | 公開 API 版 | palette 版 |
 |---|---|
-| <video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv5-public.mp4" controls muted playsinline width="260"></video> | <video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv5-palette.mp4" controls muted playsinline width="260"></video> |
+| ![公開 API 版](Docs/lv5-public.gif) | ![palette 版](Docs/lv5-palette.gif) |
+
+原寸の動画: [lv5-public.mp4](Docs/lv5-public.mp4) / [lv5-palette.mp4](Docs/lv5-palette.mp4)
 
 **注意:** これらはスクロールと検索の起動をプログラムから実行して撮ったもので、
 指での操作ではありません。Level 3 のラグのようにタッチ駆動のタイミングに依存する挙動は、
@@ -149,7 +160,7 @@ iOS 27.0 シミュレータ（iPhone 18 Pro）で、このリポジトリのコ�
 ## 構成
 
 ```
-Docs/                          # 各 Level の録画
+Docs/                          # 各 Level の録画（GIF と mp4）
 Sources/
   UIKitCorePrivate/            # 非公開ヘッダ（ipsw で iOS 26.5 から生成）
   Comparison/
