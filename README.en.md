@@ -106,9 +106,27 @@ Run **`Lv5 Public ✗`** and **`Lv5 Palette`** side by side and walk through the
 This is a large title, a stacked search bar, and a picker directly below it: the pattern used by
 Music, Photos, Mail and Fitness.
 
+### Recordings
+
+`Docs/` holds a recording per level, made on an iOS 27.0 simulator (iPhone 18 Pro) running this
+repository's own code.
+
+| Level | Public API | Palette | What to watch |
+|---|---|---|---|
+| 1 | [lv1-public.mp4](Docs/lv1-public.mp4) | — | Scrolling brings the edge effect up behind the picker |
+| 2 | [lv2-public.mp4](Docs/lv2-public.mp4) | [lv2-palette.mp4](Docs/lv2-palette.mp4) | Same position and size; compare the picker's material and whether an edge line appears under the bar |
+| 3 | [lv3-public.mp4](Docs/lv3-public.mp4) | [lv3-palette.mp4](Docs/lv3-palette.mp4) | The large title collapsing, then bouncing |
+| 4 | [lv4-public.mp4](Docs/lv4-public.mp4) | [lv4-palette.mp4](Docs/lv4-palette.mp4)<br>[lv4-palette-top.mp4](Docs/lv4-palette-top.mp4) | Search activating and dismissing; the palette in its bottom and top slots |
+| 5 | [lv5-public.mp4](Docs/lv5-public.mp4) | [lv5-palette.mp4](Docs/lv5-palette.mp4) | Collapse, bounce, then search activating and dismissing |
+
+**Note:** the scrolling and search activation in these recordings are driven programmatically, not
+by touch. Behavior that depends on touch-driven timing, such as the lag at Level 3, may not
+reproduce here; check those by hand in the previews.
+
 ## Layout
 
 ```
+Docs/                          # One recording per level
 Sources/
   UIKitCorePrivate/            # Private headers (generated from iOS 26.5 with ipsw)
   Comparison/

@@ -106,9 +106,27 @@ Xcode Previews を実行してください。プレビュー名は判定つき�
 ラージタイトル ＋ stacked 検索バー ＋ その直下のピッカーという、Music / Photos / Mail /
 Fitness が採用しているパターンです。
 
+### 録画
+
+`Docs/` に各 Level の録画を置いてあります。iOS 27.0 シミュレータ（iPhone 18 Pro）で、
+このリポジトリのコードをそのまま動かして撮ったものです。
+
+| Level | 公開 API 版 | palette 版 | 何を見るか |
+|---|---|---|---|
+| 1 | [lv1-public.mp4](Docs/lv1-public.mp4) | — | スクロールするとピッカーの背後にエッジエフェクトがかかる |
+| 2 | [lv2-public.mp4](Docs/lv2-public.mp4) | [lv2-palette.mp4](Docs/lv2-palette.mp4) | 位置とサイズは同一。ピッカーの質感と、バー下端の境目の有無 |
+| 3 | [lv3-public.mp4](Docs/lv3-public.mp4) | [lv3-palette.mp4](Docs/lv3-palette.mp4) | ラージタイトルの折りたたみとバウンス |
+| 4 | [lv4-public.mp4](Docs/lv4-public.mp4) | [lv4-palette.mp4](Docs/lv4-palette.mp4)<br>[lv4-palette-top.mp4](Docs/lv4-palette-top.mp4) | 検索の起動と解除。palette 側は下スロットと上スロット |
+| 5 | [lv5-public.mp4](Docs/lv5-public.mp4) | [lv5-palette.mp4](Docs/lv5-palette.mp4) | 折りたたみ → バウンス → 検索の起動と解除 |
+
+**注意:** これらはスクロールと検索の起動をプログラムから実行して撮ったもので、指での操作では
+ありません。Level 3 のラグのようにタッチ駆動のタイミングに依存する挙動は、この録画では
+再現しきれない可能性があります。その場合はプレビューを手で操作して確認してください。
+
 ## 構成
 
 ```
+Docs/                          # 各 Level の録画
 Sources/
   UIKitCorePrivate/            # 非公開ヘッダ（ipsw で iOS 26.5 から生成）
   Comparison/
