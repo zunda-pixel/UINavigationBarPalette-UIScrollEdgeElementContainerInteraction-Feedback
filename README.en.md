@@ -109,7 +109,7 @@ Music, Photos, Mail and Fitness.
 ### Recordings
 
 Recorded on an iOS 27.0 simulator (iPhone 18 Pro) running this repository's own code.
-The tables show GIFs (280px, 10fps); the full-resolution mp4 is linked under each level.
+The tables show GIFs (400px, 15fps); the full-resolution mp4 is linked under each level.
 All files live in `Docs/`.
 
 #### Level 1 — Scrolling brings the edge effect up behind the picker
@@ -128,7 +128,7 @@ Full-resolution video: [lv1-public.mp4](Docs/lv1-public.mp4)
 
 Full-resolution video: [lv2-public.mp4](Docs/lv2-public.mp4) / [lv2-palette.mp4](Docs/lv2-palette.mp4)
 
-#### Level 3 — The large title collapsing, then bouncing
+#### Level 3 — Scrolling up from deep in the list, watching the large title expand
 
 | Public API | Palette |
 |---|---|
