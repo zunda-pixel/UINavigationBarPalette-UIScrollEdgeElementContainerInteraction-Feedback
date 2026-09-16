@@ -128,7 +128,7 @@ Full-resolution video: [lv1-public.mp4](Docs/lv1-public.mp4)
 
 Full-resolution video: [lv2-public.mp4](Docs/lv2-public.mp4) / [lv2-palette.mp4](Docs/lv2-palette.mp4)
 
-#### Level 3 — One continuous drag: up until the title goes inline, then back down without lifting
+#### Level 3 — One continuous drag: up until the title goes inline, back down without lifting, then release
 
 | Public API | Palette |
 |---|---|
@@ -140,6 +140,9 @@ clear. The custom bar sits outside the navigation bar, so it stays on top of the
 grows.
 
 At full stretch the two settle into the same position, so the difference is in the transition.
+Releasing after that lets the system animate back to the top.
+
+Level 3's GIF alone plays at 1.8x. The mp4 runs at real speed.
 
 Full-resolution video: [lv3-public.mp4](Docs/lv3-public.mp4) / [lv3-palette.mp4](Docs/lv3-palette.mp4)
 
