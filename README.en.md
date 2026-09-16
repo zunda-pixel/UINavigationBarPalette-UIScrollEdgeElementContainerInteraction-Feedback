@@ -108,20 +108,53 @@ Music, Photos, Mail and Fitness.
 
 ### Recordings
 
-`Docs/` holds a recording per level, made on an iOS 27.0 simulator (iPhone 18 Pro) running this
-repository's own code.
+Recorded on an iOS 27.0 simulator (iPhone 18 Pro) running this repository's own code.
+The files live in `Docs/`.
 
-| Level | Public API | Palette | What to watch |
-|---|---|---|---|
-| 1 | [lv1-public.mp4](Docs/lv1-public.mp4) | — | Scrolling brings the edge effect up behind the picker |
-| 2 | [lv2-public.mp4](Docs/lv2-public.mp4) | [lv2-palette.mp4](Docs/lv2-palette.mp4) | Same position and size; compare the picker's material and whether an edge line appears under the bar |
-| 3 | [lv3-public.mp4](Docs/lv3-public.mp4) | [lv3-palette.mp4](Docs/lv3-palette.mp4) | The large title collapsing, then bouncing |
-| 4 | [lv4-public.mp4](Docs/lv4-public.mp4) | [lv4-palette.mp4](Docs/lv4-palette.mp4)<br>[lv4-palette-top.mp4](Docs/lv4-palette-top.mp4) | Search activating and dismissing; the palette in its bottom and top slots |
-| 5 | [lv5-public.mp4](Docs/lv5-public.mp4) | [lv5-palette.mp4](Docs/lv5-palette.mp4) | Collapse, bounce, then search activating and dismissing |
 
-**Note:** the scrolling and search activation in these recordings are driven programmatically, not
-by touch. Behavior that depends on touch-driven timing, such as the lag at Level 3, may not
-reproduce here; check those by hand in the previews.
+#### Level 1 — Scrolling brings the edge effect up behind the picker
+
+<table>
+<tr><th>Public API</th></tr>
+<tr><td><video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv1-public.mp4" controls muted playsinline width="260"></video></td></tr>
+</table>
+
+
+#### Level 2 — Same position and size; compare the picker's material and whether an edge line appears under the bar
+
+<table>
+<tr><th>Public API</th><th>Palette</th></tr>
+<tr><td><video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv2-public.mp4" controls muted playsinline width="260"></video></td><td><video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv2-palette.mp4" controls muted playsinline width="260"></video></td></tr>
+</table>
+
+
+#### Level 3 — The large title collapsing, then bouncing
+
+<table>
+<tr><th>Public API</th><th>Palette</th></tr>
+<tr><td><video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv3-public.mp4" controls muted playsinline width="260"></video></td><td><video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv3-palette.mp4" controls muted playsinline width="260"></video></td></tr>
+</table>
+
+
+#### Level 4 — Search activating and dismissing. The palette can sit below the search bar or above the title
+
+<table>
+<tr><th>Public API</th><th>Palette (bottom slot)</th><th>Palette (top slot)</th></tr>
+<tr><td><video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv4-public.mp4" controls muted playsinline width="260"></video></td><td><video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv4-palette.mp4" controls muted playsinline width="260"></video></td><td><video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv4-palette-top.mp4" controls muted playsinline width="260"></video></td></tr>
+</table>
+
+
+#### Level 5 — Collapse, bounce, then search activating and dismissing
+
+<table>
+<tr><th>Public API</th><th>Palette</th></tr>
+<tr><td><video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv5-public.mp4" controls muted playsinline width="260"></video></td><td><video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv5-palette.mp4" controls muted playsinline width="260"></video></td></tr>
+</table>
+
+
+**Note:** the scrolling and search activation in these recordings are driven
+programmatically, not by touch. Behavior that depends on touch-driven timing, such as the
+lag at Level 3, may not reproduce here; check those by hand in the previews.
 
 ## Layout
 

@@ -108,20 +108,54 @@ Fitness が採用しているパターンです。
 
 ### 録画
 
-`Docs/` に各 Level の録画を置いてあります。iOS 27.0 シミュレータ（iPhone 18 Pro）で、
-このリポジトリのコードをそのまま動かして撮ったものです。
+iOS 27.0 シミュレータ（iPhone 18 Pro）で、このリポジトリのコードをそのまま動かして
+撮ったものです。ファイルは `Docs/` にあります。
 
-| Level | 公開 API 版 | palette 版 | 何を見るか |
-|---|---|---|---|
-| 1 | [lv1-public.mp4](Docs/lv1-public.mp4) | — | スクロールするとピッカーの背後にエッジエフェクトがかかる |
-| 2 | [lv2-public.mp4](Docs/lv2-public.mp4) | [lv2-palette.mp4](Docs/lv2-palette.mp4) | 位置とサイズは同一。ピッカーの質感と、バー下端の境目の有無 |
-| 3 | [lv3-public.mp4](Docs/lv3-public.mp4) | [lv3-palette.mp4](Docs/lv3-palette.mp4) | ラージタイトルの折りたたみとバウンス |
-| 4 | [lv4-public.mp4](Docs/lv4-public.mp4) | [lv4-palette.mp4](Docs/lv4-palette.mp4)<br>[lv4-palette-top.mp4](Docs/lv4-palette-top.mp4) | 検索の起動と解除。palette 側は下スロットと上スロット |
-| 5 | [lv5-public.mp4](Docs/lv5-public.mp4) | [lv5-palette.mp4](Docs/lv5-palette.mp4) | 折りたたみ → バウンス → 検索の起動と解除 |
 
-**注意:** これらはスクロールと検索の起動をプログラムから実行して撮ったもので、指での操作では
-ありません。Level 3 のラグのようにタッチ駆動のタイミングに依存する挙動は、この録画では
-再現しきれない可能性があります。その場合はプレビューを手で操作して確認してください。
+#### Level 1 — スクロールするとピッカーの背後にエッジエフェクトがかかる
+
+<table>
+<tr><th>公開 API 版</th></tr>
+<tr><td><video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv1-public.mp4" controls muted playsinline width="260"></video></td></tr>
+</table>
+
+
+#### Level 2 — 位置とサイズは同一。ピッカーの質感と、バー下端に境目の線が出るかを比べる
+
+<table>
+<tr><th>公開 API 版</th><th>palette 版</th></tr>
+<tr><td><video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv2-public.mp4" controls muted playsinline width="260"></video></td><td><video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv2-palette.mp4" controls muted playsinline width="260"></video></td></tr>
+</table>
+
+
+#### Level 3 — ラージタイトルの折りたたみとバウンス
+
+<table>
+<tr><th>公開 API 版</th><th>palette 版</th></tr>
+<tr><td><video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv3-public.mp4" controls muted playsinline width="260"></video></td><td><video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv3-palette.mp4" controls muted playsinline width="260"></video></td></tr>
+</table>
+
+
+#### Level 4 — 検索の起動と解除。palette は検索バーの下とタイトルの上の 2 箇所に置ける
+
+<table>
+<tr><th>公開 API 版</th><th>palette 版（下スロット）</th><th>palette 版（上スロット）</th></tr>
+<tr><td><video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv4-public.mp4" controls muted playsinline width="260"></video></td><td><video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv4-palette.mp4" controls muted playsinline width="260"></video></td><td><video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv4-palette-top.mp4" controls muted playsinline width="260"></video></td></tr>
+</table>
+
+
+#### Level 5 — 折りたたみ → バウンス → 検索の起動と解除
+
+<table>
+<tr><th>公開 API 版</th><th>palette 版</th></tr>
+<tr><td><video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv5-public.mp4" controls muted playsinline width="260"></video></td><td><video src="https://github.com/zunda-pixel/UINavigationBarPalette-UIScrollEdgeElementContainerInteraction-Feedback/raw/main/Docs/lv5-palette.mp4" controls muted playsinline width="260"></video></td></tr>
+</table>
+
+
+**注意:** これらはスクロールと検索の起動をプログラムから実行して撮ったもので、
+指での操作ではありません。Level 3 のラグのようにタッチ駆動のタイミングに依存する挙動は、
+この録画では再現しきれない可能性があります。その場合はプレビューを手で操作して
+確認してください。
 
 ## 構成
 
