@@ -109,9 +109,11 @@ Music, Photos, Mail and Fitness.
 ### Recordings
 
 Recorded on an iOS 27.0 simulator (iPhone 18 Pro) running this repository's own code.
-The tables show GIFs (400px); the full-resolution mp4 is linked under each level. The mp4s run
-at 60fps. GIF frame delays are whole hundredths of a second, so the GIFs are 20fps (a 5cs delay),
-which divides 60fps evenly. 25 and 50fps do not, and the uneven sampling shows up as judder.
+The tables show GIFs (400px, 50fps); the full-resolution mp4 is linked under each level. The
+mp4s run at 60fps.
+
+A GIF can only hold whole hundredths of a second per frame, so 50fps (a 2cs delay) is as many
+frames as the format allows. Watch the mp4 where smoothness matters.
 All files live in `Docs/`.
 
 #### Level 1 — Scrolling brings the edge effect up behind the picker
