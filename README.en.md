@@ -23,7 +23,7 @@ The problem starts at Level 3.
 | 2 | Make the custom bar occupy layout space | △ Position and size match by hand (requires restructuring the screen), but the material does not | ✅ Automatic |
 | 3 | Track the bar's bottom edge while a large title collapses | ✗ Lags and jitters | ✅ |
 | 4 | Compose with a stacked search bar | ✗ Only one possible position, and no visibility control | ✅ Two slots: above the title and below the search bar |
-| 5 | Stay in sync with the bar on push/pop | ✗ Two pickers are visible side by side mid-transition | ✅ One bar, its content swapped |
+| 5 | Be treated as bar content across push/pop | △ A subview of the view controller's view, so it travels with it (the visible difference still needs manual confirmation) | ✅ Owned by `UINavigationItem` |
 | 6 | Participate in iOS 27 bar minimization | ✗ Cannot participate | ✅ |
 | 7 | **The real use case** (Levels 3 + 4 + 5) | ✗ | ✅ |
 
