@@ -134,9 +134,12 @@ Full-resolution video: [lv2-public.mp4](Docs/lv2-public.mp4) / [lv2-palette.mp4]
 |---|---|
 | ![Public API](Docs/lv3-public.gif) | ![Palette](Docs/lv3-palette.gif) |
 
-Watch the moment the drag reverses past the top. In the public API version the large title is
-covered by the picker and fades out; in the palette version it stays clear. The custom bar sits
-outside the navigation bar, so it stays on top of the title as the bar grows.
+Watch the stretch **as it happens**, after the drag reverses past the top. In the public API
+version the large title is covered by the picker and fades out; in the palette version it stays
+clear. The custom bar sits outside the navigation bar, so it stays on top of the title as the bar
+grows.
+
+At full stretch the two settle into the same position, so the difference is in the transition.
 
 Full-resolution video: [lv3-public.mp4](Docs/lv3-public.mp4) / [lv3-palette.mp4](Docs/lv3-palette.mp4)
 
