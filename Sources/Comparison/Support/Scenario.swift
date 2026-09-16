@@ -20,10 +20,16 @@ struct Scenario: Sendable {
   /// `preferredSearchBarPlacement = .stacked` の検索バーを追加するか。
   var usesSearchController: Bool = false
 
-  /// 検索バーの上側のスロット（`_topPalette`）にもピッカーを置くか。
+  /// バーの下側のスロット（`_bottomPalette`）にピッカーを置くか。
   ///
-  /// この項目は palette 版にしか効きません。公開 API にはタイトル領域と stacked 検索バーの
-  /// 「間」にビューを置く手段がないためです。効かないこと自体が Level 4 の論点です。
+  /// stacked 検索バーがある場合、その直下になります。
+  var usesBottomPalette: Bool = true
+
+  /// バーの上側のスロット（`_topPalette`）にピッカーを置くか。タイトルより上になります。
+  ///
+  /// この 2 つの項目は palette 版にしか効きません。公開 API には
+  /// ナビゲーションバーの中にビューを置く手段がないためです。
+  /// 効かないこと自体が Level 4 の論点です。
   var usesTopPalette: Bool = false
 }
 

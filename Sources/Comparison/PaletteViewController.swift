@@ -29,21 +29,24 @@ final class PaletteViewController: ListViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    // 実装はこの 3 行だけ。画面構造の変更も、インセットの手計算も不要。
+    // 実装はこれだけ。画面構造の変更も、インセットの手計算も不要。
     //
     // palette は contentView を横いっぱいに広げるため、左右の余白は contentView 側で与える。
     // `_contentViewMarginType` という非公開プロパティがあるが、値 0〜5 を試しても
     // 観測可能な変化はなかった（詳細は README の「調査メモ」を参照）。
-    let palette = _UINavigationBarPalette(contentView: BarContentView())!
-    palette.preferredHeight = scenario.barHeight
-    navigationItem._bottomPalette = palette
+    if scenario.usesBottomPalette {
+      let bottomPalette = _UINavigationBarPalette(contentView: BarContentView())!
+      bottomPalette.preferredHeight = scenario.barHeight
+      navigationItem._bottomPalette = bottomPalette
+    }
 
     if scenario.usesSearchController {
       navigationItem.searchController = UISearchController(searchResultsController: nil)
       navigationItem.preferredSearchBarPlacement = .stacked
     }
 
-    // palette は検索バーに対して上下 2 つのスロットを持つ。公開 API 側にはどちらの相当物もない。
+    // palette はナビゲーションバーの中に上下 2 つのスロットを持つ。
+    // 公開 API 側にはどちらの相当物もない。
     if scenario.usesTopPalette {
       let topPalette = _UINavigationBarPalette(
         contentView: BarContentView(items: ["Newest", "Oldest"])

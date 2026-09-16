@@ -88,7 +88,7 @@ Xcode Previews を実行してください。プレビュー名は判定つき�
 | `Lv1 Public ✅` | 公開 API で実現できることの確認。スクロールするとエフェクトが見える（palette 版は不要） |
 | `Lv2 Public △` / `Lv2 Palette` | 手作業で実現できるが代償がある |
 | `Lv3 Public ✗` / `Lv3 Palette` | ラージタイトル |
-| `Lv4 Public ✗` / `Lv4 Palette` | 検索バー |
+| `Lv4 Public ✗` / `Lv4 Palette (bottom)` / `Lv4 Palette (top)` | 検索バー。palette 側は 2 つのスロットを別々に示す |
 | `Lv5 Public ✗` / `Lv5 Palette` | **実際のユースケース。ここだけ見れば全体が分かる** |
 
 各レベルの「やりたいこと・結果・判定・確認手順」は、対応するソースファイルの先頭コメントに

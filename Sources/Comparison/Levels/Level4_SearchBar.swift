@@ -27,12 +27,12 @@ import UIKit
 // 判定: **ギャップ。**
 //
 // 確認手順:
-//   1. 2 つのプレビューを並べ、ピッカーを置けている位置の数を比べる。
+//   1. 3 つのプレビューを見比べ、ピッカーが座れる位置の数を比べる。
 //   2. 検索フィールドをタップして起動する。
 //   3. キャンセルして解除する。
-//   4. 解除後のコンテンツ先頭位置を両者で比較する。
+//   4. 解除後のコンテンツ先頭位置を公開 API 版と palette 版で比較する。
 
-/// Level 4 公開 API 版: 置けるのは safeArea 下端の 1 箇所だけ。
+/// Level 4 公開 API 版: 置けるのはナビゲーションバーの外側、safeArea 下端の 1 箇所だけ。
 /// 検索の起動・解除でインセットが合わなくなる。
 @available(iOS 26.0, *)
 #Preview("Lv4 Public ✗") {
@@ -43,13 +43,29 @@ import UIKit
   )
 }
 
-/// Level 4 palette 版: タイトルの上（`_topPalette`）と検索バーの下（`_bottomPalette`）の
-/// 両方に置ける。インセットもバーが維持する。
+/// Level 4 palette 版・下スロット: `_bottomPalette` は検索バーの直下に入る。
+/// これが Music / Photos / Mail / Fitness のフィルタと同じ位置。
 @available(iOS 18.0, *)
-#Preview("Lv4 Palette") {
+#Preview("Lv4 Palette (bottom)") {
   makeNavigationController(
     rootViewController: PaletteViewController(
-      Scenario(title: "Level 4", usesSearchController: true, usesTopPalette: true)
+      Scenario(title: "Level 4", usesSearchController: true)
+    )
+  )
+}
+
+/// Level 4 palette 版・上スロット: `_topPalette` はタイトルより上に入る。
+/// 公開 API ではこの位置にビューを置く手段がない。
+@available(iOS 18.0, *)
+#Preview("Lv4 Palette (top)") {
+  makeNavigationController(
+    rootViewController: PaletteViewController(
+      Scenario(
+        title: "Level 4",
+        usesSearchController: true,
+        usesBottomPalette: false,
+        usesTopPalette: true
+      )
     )
   )
 }

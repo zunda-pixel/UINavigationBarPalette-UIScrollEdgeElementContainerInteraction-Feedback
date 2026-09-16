@@ -88,7 +88,7 @@ Open `Package.swift` in Xcode 27 or later and run the Xcode Previews in
 | `Lv1 Public ✅` | What the public API does achieve — scroll to see the effect (no palette version needed) |
 | `Lv2 Public △` / `Lv2 Palette` | Achievable by hand, at a cost |
 | `Lv3 Public ✗` / `Lv3 Palette` | Large title |
-| `Lv4 Public ✗` / `Lv4 Palette` | Search bar |
+| `Lv4 Public ✗` / `Lv4 Palette (bottom)` / `Lv4 Palette (top)` | Search bar. The palette's two slots are shown separately |
 | `Lv5 Public ✗` / `Lv5 Palette` | **The real use case. This pair alone shows the whole picture** |
 
 Each level's goal, result, verdict and reproduction steps are documented at the top of the
