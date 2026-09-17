@@ -161,7 +161,7 @@ Level 4 の GIF は 0.5 倍速です。原寸の mp4 は実速度です。
 
 原寸の動画: [lv4-public.mp4](Docs/lv4-public.mp4) / [lv4-palette.mp4](Docs/lv4-palette.mp4) / [lv4-palette-top.mp4](Docs/lv4-palette-top.mp4)
 
-#### Level 5 — 折りたたみ → バウンス → 検索の起動と解除
+#### Level 5 — 引き伸ばして指を離す → 通常タイトルまで送って折り返す → 検索の起動と解除
 
 | 公開 API 版 | palette 版 |
 |---|---|

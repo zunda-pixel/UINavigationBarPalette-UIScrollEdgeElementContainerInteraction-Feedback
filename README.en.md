@@ -162,7 +162,7 @@ Level 4's GIFs play at 0.5x. The mp4s run at real speed.
 
 Full-resolution video: [lv4-public.mp4](Docs/lv4-public.mp4) / [lv4-palette.mp4](Docs/lv4-palette.mp4) / [lv4-palette-top.mp4](Docs/lv4-palette-top.mp4)
 
-#### Level 5 — Collapse, bounce, then search activating and dismissing
+#### Level 5 — Stretch and release, drag up to the inline title and reverse, then search
 
 | Public API | Palette |
 |---|---|
