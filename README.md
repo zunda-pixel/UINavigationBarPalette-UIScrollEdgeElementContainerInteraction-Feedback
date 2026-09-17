@@ -176,16 +176,6 @@ Level 5 だけは実際に指で操作して録画しています（GIF は 1.67
 
 原寸の動画: [lv5-public.mp4](Docs/lv5-public.mp4) / [lv5-palette.mp4](Docs/lv5-palette.mp4)
 
-**注意:** Level 5 以外は、スクロールと検索の起動をプログラムから実行して撮ったものです。
-
-**この方式は実際の挙動と異なる結果になることがあります。** Level 5 で確認したところ、
-`contentOffset` を直接書き換えた録画では公開 API 版と palette 版のどちらもタイトルが
-ピッカーの下に来ましたが、指で操作すると palette 版ではそうなりません。
-`UIScrollView` 本来のスクロール処理を経由しないためと考えられます。
-iOS 27 のバー最小化がプログラムからのスクロールで発火しなかったのも同じ理由と思われます。
-
-そのため Level 5 は指で操作して撮り直してあります。**Level 3 の引き伸ばし時の挙動も
-同じ疑いがあるため、証拠として使う前に手で操作して確認してください。**
 
 ## 構成
 
@@ -246,80 +236,6 @@ var bottomPalette: UINavigationBarPalette?
 - SwiftUI には `.safeAreaBar(edge:)` という公開 API が存在する一方、UIKit には等価な公開 API が
   ありません。UIKit で構築されたアプリは、非公開 API に依存するか SwiftUI へ移行するかの
   選択を迫られています。
-
-## 調査メモ
-
-サンプルを組む過程で分かった、`_UINavigationBarPalette` を実際に使う際の落とし穴です。
-
-### ipsw が生成したプロパティ宣言はそのままでは実行時に落ちる
-
-`_UINavigationBarPalette.h` のプロパティ宣言には `setter=` が付いていません。
-
-```objc
-@property (nonatomic) unsigned long long _contentViewMarginType;
-```
-
-この宣言のまま Swift から代入すると `set_contentViewMarginType:` を呼びますが、
-実際のセレクタは同ヘッダの instance methods にある `_setContentViewMarginType:` です。
-
-```
--[_UINavigationBarPalette set_contentViewMarginType:]: unrecognized selector sent to instance
-```
-
-`_displaysWhenSearchActive` と `_layoutPriority` も同じ形です。このリポジトリでは
-3 つとも `setter=` を補ってあります。`_displaysWhenSearchActive` は FB22730304 で公開を
-求めている項目でもあるため、この修正なしでは検証そのものができません。
-
-### iOS 27 のバー最小化は検証できなかった
-
-`UINavigationItem.navigationBarMinimization` を設定して比較する Level を用意していましたが、
-このサンプルでは最小化そのものが発火しませんでした。プログラムから
-`setContentOffset(_:animated:)` でスクロールしてもナビゲーションバーの高さは変化せず
-（palette 版 118pt、公開 API 版 54pt のまま）、プレビューで手動スクロールしても
-両者に差は見られませんでした。
-
-ギャップの有無を判断できないため、この項目は Level から外してあります。
-FB22730304 はこれを根拠にしていません。
-
-### `_topPalette` はタイトルより上のスロット
-
-名前から検索バーの上を想像しますが、実際はナビゲーションバーの最上部です。
-`_topPalette` と `_bottomPalette` の両方に stacked 検索バーを組み合わせると、
-上から次の順に並びます（iOS 27.0 シミュレータで確認）。
-
-```
-_topPalette      ← タイトルより上
-タイトル
-検索バー（stacked）
-_bottomPalette   ← 検索バーより下
-```
-
-公開 API 側のコンテナビューは safeArea の下端、つまりナビゲーションバー全体の外側にしか
-置けないため、このどちらの位置も取れません。
-
-### `_contentViewMarginType` には観測可能な効果がなかった
-
-値 0〜5 を実機（iOS 27.0 シミュレータ）で試し、ピッカーの帯をピクセル単位で比較しましたが、
-すべて一致しました。名前に反して、これで左右の余白は付きません。
-
-### 余白は contentView 側で与える。ただしピッカーの高さは明示すること
-
-palette は `contentView` を横いっぱいに広げるため、余白はコンテナビューで与えます
-（`BarContentView`）。このとき、コンテナ内でピッカーを centerY だけで留めると、
-ピッカーの高さが確定せずコンテナいっぱいまで引き伸ばされ、カプセルの縦横比が崩れます。
-上下を制約で留め、高さも明示する必要があります（`BarMetrics` にまとめてあります）。
-
-## 正確性に関する注記
-
-- `_UINavigationBarPalette.pinned` は、設定しても観測可能な変化がありませんでした。
-  FB22730304 で求めている範囲には含めていません。
-- `UINavigationController.attachPalette(_:isPinned:)` も試しましたが、
-  `navigationItem._bottomPalette` への代入と同じ挙動でした。同等のため、
-  このリポジトリには含めていません。
-- Level 2 のマテリアル差と Level 3 の差分は挙動であり、画面収録で確認するものです。
-  それ以外の差分は SDK のヘッダだけから確認できます。
-- `Sources/UIKitCorePrivate/include/` のヘッダは [ipsw](https://github.com/blacktop/ipsw) で
-  iOS 26.5 から生成したものです。比較をビルド可能にするためだけに同梱しています。
 
 ## 確認環境
 
