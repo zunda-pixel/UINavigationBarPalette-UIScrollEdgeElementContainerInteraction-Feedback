@@ -162,17 +162,31 @@ Level 4's GIFs play at 0.5x. The mp4s run at real speed.
 
 Full-resolution video: [lv4-public.mp4](Docs/lv4-public.mp4) / [lv4-palette.mp4](Docs/lv4-palette.mp4) / [lv4-palette-top.mp4](Docs/lv4-palette-top.mp4)
 
-#### Level 5 — Stretch and release, drag up to the inline title and reverse, then search
+#### Level 5 — Stretch and release, drag up to the inline title and reverse, then search (recorded by hand)
 
 | Public API | Palette |
 |---|---|
 | ![Public API](Docs/lv5-public.gif) | ![Palette](Docs/lv5-palette.gif) |
 
+Watch the stretch downward. Top to bottom, the public API version goes **picker, title, search
+bar**; the palette version keeps **title, search bar, picker**. The palette is part of the bar, so
+the order holds; with the public API the picker is the one thing left outside the bar, and the
+title and search bar slide underneath it.
+
+Level 5 alone was recorded by hand (its GIFs play at 1.67x) — see the note below for why.
+
 Full-resolution video: [lv5-public.mp4](Docs/lv5-public.mp4) / [lv5-palette.mp4](Docs/lv5-palette.mp4)
 
-**Note:** the scrolling and search activation in these recordings are driven
-programmatically, not by touch, so behavior that depends on touch-driven timing may not
-reproduce (iOS 27 bar minimization never fired under programmatic scrolling).
+**Note:** every level except Level 5 is recorded by driving scrolling and search
+programmatically.
+
+**That can produce behavior the app does not actually have.** At Level 5, setting `contentOffset`
+directly put the title below the picker in both implementations, but by hand the palette version
+does not do that — presumably because the assignment skips `UIScrollView`'s own scrolling path.
+The same is likely why iOS 27 bar minimization never fired under programmatic scrolling.
+
+Level 5 is therefore re-recorded by hand. **Level 3's stretch is open to the same doubt; check it
+by hand before relying on it.**
 
 ## Layout
 
