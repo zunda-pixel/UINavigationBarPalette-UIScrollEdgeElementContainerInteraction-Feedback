@@ -21,7 +21,7 @@ The problem is Levels 3 and 4.
 |---|---|---|---|
 | 1 | Apply the scroll edge effect behind a custom bar | ✅ **Works** — this is what the API is for | — |
 | 2 | Make the custom bar occupy layout space | △ Position and size match by hand (requires restructuring the screen), but the material does not | ✅ Automatic |
-| 3 | Track the bar's bottom edge while a large title collapses | ✗ Lags and jitters | ✅ |
+| 3 | Stay in the right order relative to a large title | ✗ Stretching puts the picker above the title | ✅ Order holds |
 | 4 | Compose with a stacked search bar | ✗ Only one possible position, and no visibility control | ✅ Two slots: above the title and below the search bar |
 | 5 | **The real use case** (Levels 3 + 4) | ✗ | ✅ |
 
@@ -32,8 +32,13 @@ That single question separates the levels with a gap from the ones without.
 As long as the bar's height is fixed, pinning a custom bar to the top of the safe area and pushing
 the content inset down by a constant works. The moment the bar's height starts moving it breaks,
 because **there is no public way for a view outside the bar to follow that**. Every level with a
-gap is a height-changing case: Level 3 (a large title collapsing), Level 4 (a search bar
+gap is a height-changing case: Level 3 (a large title stretching), Level 4 (a search bar
 activating and dismissing).
+
+It breaks as an inversion of order. When the bar grows, what is inside it — the title, the search
+bar — travels down with it, while a custom bar outside the bar stays where the safe area puts it.
+The result reads picker, title, search bar from the top: the one piece that should belong to the
+bar is the one left above everything else.
 
 Where the height does not change, no difference appears. Push/pop was tested too: despite the
 difference in ownership — the palette belongs to `UINavigationItem`, the custom bar is a subview of
@@ -99,8 +104,9 @@ corresponding source file (in Japanese).
 Run **`Lv5 Public ✗`** and **`Lv5 Palette`** side by side and walk through them in this order:
 
 1. At rest, compare where the picker sits relative to the search field.
-2. Scroll up slowly and let the large title collapse (Level 3 — the lag).
-3. Flick to the top and let it bounce (the lag is at its worst here).
+2. Stretch downward and watch whether the title and search bar pass under the picker
+   (the same thing Level 3 shows).
+3. Scroll up until the large title goes inline.
 4. Activate the search field, then dismiss it (Level 4 — the inset breaks).
 
 This is a large title, a stacked search bar, and a picker directly below it: the pattern used by

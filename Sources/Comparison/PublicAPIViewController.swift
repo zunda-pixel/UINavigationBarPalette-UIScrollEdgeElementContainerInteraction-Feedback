@@ -51,7 +51,8 @@ final class PublicAPIViewController: UIViewController {
     // 2. カスタムバーを safeArea 上端に固定する。
     //    `safeAreaLayoutGuide.topAnchor` はナビゲーションバーの下端を追うが、これを解決するのは
     //    このビューコントローラのレイアウトパスであり、バー自身のレイアウトではない。
-    //    バーの高さが動くケース（Level 3 のラージタイトル）でラグが出るのはこのため。
+    //    バーが伸びてもこのビューは safeArea の位置に留まるため、Level 3 や Level 5 で
+    //    タイトルより上に取り残される。
     barContainerView.translatesAutoresizingMaskIntoConstraints = false
     barContentView.translatesAutoresizingMaskIntoConstraints = false
     barContainerView.addSubview(barContentView)
