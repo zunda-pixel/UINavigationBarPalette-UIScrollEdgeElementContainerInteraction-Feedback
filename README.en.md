@@ -134,21 +134,17 @@ Full-resolution video: [lv1-public.mp4](Docs/lv1-public.mp4)
 
 Full-resolution video: [lv2-public.mp4](Docs/lv2-public.mp4) / [lv2-palette.mp4](Docs/lv2-palette.mp4)
 
-#### Level 3 — One continuous drag: up until the title goes inline, back down without lifting, then release
+#### Level 3 — Drag down to stretch, then release (recorded by hand)
 
 | Public API | Palette |
 |---|---|
 | ![Public API](Docs/lv3-public.gif) | ![Palette](Docs/lv3-palette.gif) |
 
-Watch the stretch **as it happens**, after the drag reverses past the top. In the public API
-version the large title is covered by the picker and fades out; in the palette version it stays
-clear. The custom bar sits outside the navigation bar, so it stays on top of the title as the bar
-grows.
+Watch the stretch. Top to bottom, the public API version goes **picker, title**; the palette
+version keeps **title, picker**. The palette is part of the bar so the order holds; with the public
+API the picker is the one thing left outside the bar and the title ends up beneath it.
 
-At full stretch the two settle into the same position, so the difference is in the transition.
-Releasing after that lets the system animate back to the top.
-
-Level 3's GIF plays at 2x. The mp4 runs at real speed.
+Same thing as Level 5, simpler here because there is no search bar.
 
 Full-resolution video: [lv3-public.mp4](Docs/lv3-public.mp4) / [lv3-palette.mp4](Docs/lv3-palette.mp4)
 
