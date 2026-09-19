@@ -2,7 +2,7 @@ import UIKit
 
 /// `UIScrollEdgeElementContainerInteraction` による実装（公開 API のみでの最善の再現）。
 ///
-/// iOS 27.0 SDK における公開 API の全体は次の 2 プロパティです。
+/// iOS 27.1 SDK における公開 API の全体は次の 2 プロパティです。
 ///
 /// ```objc
 /// @interface UIScrollEdgeElementContainerInteraction : NSObject <UIInteraction>

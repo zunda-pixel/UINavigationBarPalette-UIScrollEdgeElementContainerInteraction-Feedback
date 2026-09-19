@@ -55,7 +55,7 @@ Level 4（検索バーの起動・解除）は、いずれもバーの高さが�
 
 ### `UIScrollEdgeElementContainerInteraction`（iOS 26.0）
 
-iOS 27.0 SDK のヘッダにおける公開 API の全体:
+iOS 27.1 SDK のヘッダにおける公開 API の全体:
 
 ```objc
 UIKIT_FINAL UIKIT_EXTERN NS_SWIFT_UI_ACTOR API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0))
@@ -74,6 +74,9 @@ UIKIT_FINAL UIKIT_EXTERN NS_SWIFT_UI_ACTOR API_AVAILABLE(ios(26.0), tvos(26.0), 
 > images, glass views, and controls, will automatically do so.
 
 スクロールエッジエフェクトの形状にビューを参加させるための仕組みです。
+
+iOS 27.1 SDK でもこの 2 プロパティのままで、`UINavigationItem` に palette 相当の公開 API も
+追加されていません。
 
 ### `_UINavigationBarPalette`
 
@@ -241,5 +244,6 @@ var bottomPalette: UINavigationBarPalette?
 
 ## 確認環境
 
-- Xcode 27.0 (27A266a) / iOS 27.0 SDK
+- Xcode 27.1 (27A9269) / iOS 27.1 SDK
 - `xcodebuild -scheme Comparison -destination 'generic/platform=iOS Simulator'` でビルド成功
+- 録画は iOS 27.0 シミュレータで撮影

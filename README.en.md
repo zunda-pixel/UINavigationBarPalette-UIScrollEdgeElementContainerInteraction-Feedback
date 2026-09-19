@@ -55,7 +55,7 @@ with a hard edge-effect line appearing at the bottom of the bar.
 
 ### `UIScrollEdgeElementContainerInteraction` (iOS 26.0)
 
-The entire public surface, per the iOS 27.0 SDK header:
+The entire public surface, per the iOS 27.1 SDK header:
 
 ```objc
 UIKIT_FINAL UIKIT_EXTERN NS_SWIFT_UI_ACTOR API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0))
@@ -74,6 +74,9 @@ The header describes its purpose itself:
 > images, glass views, and controls, will automatically do so.
 
 It is a mechanism for letting views participate in the shape of the scroll edge effect.
+
+The iOS 27.1 SDK still carries the same two properties, and `UINavigationItem` still has no public
+equivalent of a palette.
 
 ### `_UINavigationBarPalette`
 
@@ -240,5 +243,6 @@ var bottomPalette: UINavigationBarPalette?
 
 ## Verified with
 
-- Xcode 27.0 (27A266a) / iOS 27.0 SDK
+- Xcode 27.1 (27A9269) / iOS 27.1 SDK
 - Builds with `xcodebuild -scheme Comparison -destination 'generic/platform=iOS Simulator'`
+- The recordings were made on an iOS 27.0 simulator
