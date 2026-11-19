@@ -42,17 +42,23 @@ final class PublicAPIViewController: UIViewController {
     // 1. リストを子ビューコントローラとして作り直す。
     //    `UICollectionViewController` は `view` がコレクションビュー自体なので、
     //    カスタムバーを置く兄弟ビューを追加できない。palette ではこの変更は不要。
+    //
+    //    ナビゲーションバーが追跡するスクロールビューは `setContentScrollView(_:for:)` で明示する
+    //    （DTS が提案した構成どおり）。UIKit は子のコレクションビューを自動で見つけるので、
+    //    呼ばなくてもラージタイトルは折りたたまれ、座標も変わらない（iOS 27.3 シミュレータで実測）。
     addChild(listViewController)
     listViewController.view.frame = view.bounds
     listViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     view.addSubview(listViewController.view)
     listViewController.didMove(toParent: self)
+    setContentScrollView(listViewController.collectionView, for: .top)
 
     // 2. カスタムバーを safeArea 上端に固定する。
-    //    `safeAreaLayoutGuide.topAnchor` はナビゲーションバーの下端を追うが、これを解決するのは
-    //    このビューコントローラのレイアウトパスであり、バー自身のレイアウトではない。
-    //    バーが伸びてもこのビューは safeArea の位置に留まるため、Level 3 や Level 5 で
-    //    タイトルより上に取り残される。
+    //    `safeAreaLayoutGuide.topAnchor` はナビゲーションバーの下端を追う。ラージタイトルの折りたたみ、
+    //    検索の起動・解除、バーの表示・非表示のいずれも、静止した状態ではバーの下端に一致する。
+    //    ただし下へ引き伸ばしている間はバーだけが伸びて safeArea は変わらないため、このビューは
+    //    元の位置に留まり、Level 3 や Level 5 でタイトルより上に取り残される。
+    //    検索の解除やバーの表示・非表示のアニメーション中も、バーと一緒には動かない。
     barContainerView.translatesAutoresizingMaskIntoConstraints = false
     barContentView.translatesAutoresizingMaskIntoConstraints = false
     barContainerView.addSubview(barContentView)
@@ -78,8 +84,9 @@ final class PublicAPIViewController: UIViewController {
     barContainerView.addInteraction(interaction)
 
     // 4. カスタムバーの高さはナビゲーションバーからは見えないので、インセットを手で押し下げる。
-    //    この定数は、バー自身の高さが変わるたびに黙って陳腐化する。
-    //    そして「バーの高さが変わった」ことを知る公開 API はない。
+    //    設定するのはカスタムバー自身の高さだけで、ナビゲーションバーの高さは親の safeArea を
+    //    通じて子に伝わる。そのためバーの高さが変わってもこの値は古くならない。
+    //    手で直す必要があるのは、カスタムバー自身の高さを変えるときだけ。
     listViewController.additionalSafeAreaInsets.top = scenario.barHeight
 
     if scenario.usesSearchController {
