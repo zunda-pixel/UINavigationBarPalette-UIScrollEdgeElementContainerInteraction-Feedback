@@ -25,15 +25,23 @@ The problem is Levels 3 and 4.
 | 4 | Compose with a stacked search bar | ✗ Only one possible position, and no visibility control | ✅ Two slots: above the title and below the search bar |
 | 5 | **The real use case** (Levels 3 + 4) | ✗ | ✅ |
 
-### The dividing line is whether the navigation bar's own height changes
+### The dividing line is whether the navigation bar is in motion
 
 That single question separates the levels with a gap from the ones without.
 
-As long as the bar's height is fixed, pinning a custom bar to the top of the safe area and pushing
-the content inset down by a constant works. The moment the bar's height starts moving it breaks,
-because **there is no public way for a view outside the bar to follow that**. Every level with a
-gap is a height-changing case: Level 3 (a large title stretching), Level 4 (a search bar
-activating and dismissing).
+Pin a custom bar to the top of the safe area, push the list's inset down by the custom bar's own
+height, and the resting position matches the palette version. That holds after the bar's height
+changes too: after a large title collapses, after search activates or dismisses, after the bar is
+hidden or shown, the coordinates match the palette version to the point (measured on an iOS 27.3
+simulator). The inset is only the custom bar's own height; the navigation bar's share reaches the
+child through the parent's safe area.
+
+What goes wrong is the bar in motion.
+
+- Stretching downward, the bar grows but the safe area does not. Stretching Level 5 by 102pt moved
+  the bar's bottom edge from 222 to 324 while the top of the safe area stayed at 222.
+- During the search dismissal animation and while the bar hides or shows, the custom bar does not
+  move with the bar.
 
 It breaks as an inversion of order. When the bar grows, what is inside it — the title, the search
 bar — travels down with it, while a custom bar outside the bar stays where the safe area puts it.
@@ -110,7 +118,8 @@ Run **`Lv5 Public ✗`** and **`Lv5 Palette`** side by side and walk through the
 2. Stretch downward and watch whether the title and search bar pass under the picker
    (the same thing Level 3 shows).
 3. Scroll up until the large title goes inline.
-4. Activate the search field, then dismiss it (Level 4 — the inset breaks).
+4. Activate the search field, then dismiss it (as in Level 4, the picker stays visible during
+   search and comes away from the bar while the dismissal animates).
 
 This is a large title, a stacked search bar, and a picker directly below it: the pattern used by
 Music, Photos, Mail and Fitness.
@@ -246,3 +255,5 @@ var bottomPalette: UINavigationBarPalette?
 - Xcode 27.1 (27A9269) / iOS 27.1 SDK
 - Builds with `xcodebuild -scheme Comparison -destination 'generic/platform=iOS Simulator'`
 - The recordings were made on an iOS 27.0 simulator
+- Coordinates were measured with Xcode 27.3 (27C5035i) on an iOS 27.3 simulator (iPhone 18 Pro);
+  the stretch and the collapse were driven by XCUITest drags, which are real touch events
